@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.util.Locale;
 import java.util.Properties;
 
 public class GestioneDb {
@@ -34,5 +36,18 @@ public class GestioneDb {
 		statement.setString(2, password);
 		statement.execute();
 
+	}
+	public  int creaScontrino(String username) throws SQLException {
+
+		PreparedStatement state = connessione
+				.prepareStatement("insert into scontrino (idScontrino, data, nome) values (?,?,?);");
+		java.util.Date data = new java.util.Date();
+		DateFormat formato = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY);
+		int idScontrino = (int) (Math.random() * 1000 + Math.random() * 1000);
+		state.setInt(1, idScontrino);
+		state.setString(2, formato.format(data));
+		state.setString(3, username);
+		state.execute();
+		return idScontrino;
 	}
 }
