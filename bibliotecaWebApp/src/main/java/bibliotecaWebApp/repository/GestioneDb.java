@@ -66,4 +66,15 @@ public class GestioneDb {
 		}
 		return false;
 	}
+
+	public boolean checkEmail(Utente u) throws SQLException {
+		PreparedStatement state = connessione.prepareStatement("select * from utente where username = ? ;");
+		state.setString(1, u.getUsername());
+		ResultSet risultato = state.executeQuery();
+		while (risultato.next()) {
+			
+		return false;
+	}
+		return true;
+}
 }

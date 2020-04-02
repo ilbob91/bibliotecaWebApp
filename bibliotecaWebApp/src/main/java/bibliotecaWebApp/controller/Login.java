@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import bibliotecaWebApp.model.Utente;
 import bibliotecaWebApp.repository.GestioneDb;
-@WebServlet(name = "login", urlPatterns = { "/", "/login" }, initParams = {
+@WebServlet(name = "login", urlPatterns = {"/login" }, initParams = {
 		@WebInitParam(name = "username", value = "admin"), @WebInitParam(name = "password", value = "1234") })
 public class Login extends HttpServlet {
 
@@ -28,6 +28,7 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 		String azione = req.getParameter("azione");
 	if(azione.equalsIgnoreCase("Entra")) {
 		if (gest.controlloUtente(u)) {
+			gest.close();
 		 req.setAttribute("username", u.getUsername());
 		 req.getRequestDispatcher("opzioniCliente.jsp");
 		}
@@ -40,7 +41,26 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 	
 		
 		
-	   }
+	   } else if (azione.equalsIgnoreCase("Registrati")) {
+		   if(u.getUsername().equals(getInitParameter("username"))) {
+			   req.setAttribute("messaggio", "Per entrare come amministratore premi ENTRA");
+			   req.getRequestDispatcher("login.jsp").forward(req, resp);
+		   }
+			   else if(gest.checkEmail(u)) {
+			   gest.insertUtente(u);
+			   gest.close();
+			   req.setAttribute("username", u.getUsername());
+			   req.getRequestDispatcher("opzioniCliente.jsp");
+		   }
+		      else {
+			   req.setAttribute("messaggio", "mail già presente, fai il Login");
+			   req.getRequestDispatcher("login.jsp").forward(req, resp);
+		      }
+			  
+		   } 
+			   
+
+	   
    } catch (ClassNotFoundException | SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
