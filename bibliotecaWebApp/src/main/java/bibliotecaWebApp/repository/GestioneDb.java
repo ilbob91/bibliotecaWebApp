@@ -4,10 +4,15 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.Locale;
 import java.util.Properties;
+
+import com.mysql.cj.xdevapi.Result;
+
+import bibliotecaWebApp.model.Utente;
 
 public class GestioneDb {
 	private Connection connessione;
@@ -30,10 +35,10 @@ public class GestioneDb {
 		this.connessione.close();
 	}
 	
-	public void insertUtente(String nome, String password) throws SQLException {
+	public void insertUtente(Utente u) throws SQLException {
 		PreparedStatement statement = connessione.prepareStatement("insert into utente (username, password) values (?,?);");
-		statement.setString(1, nome);
-		statement.setString(2, password);
+		statement.setString(1, u.getUsername());
+		statement.setString(2, u.getPassword());
 		statement.execute();
 
 	}
@@ -49,5 +54,16 @@ public class GestioneDb {
 		state.setString(3, username);
 		state.execute();
 		return idScontrino;
+	}
+
+	public boolean controlloUtente(Utente u) throws SQLException {
+		PreparedStatement state = connessione.prepareStatement("select * from utente where username = ? and password =?;");
+		state.setString(1, u.getUsername());
+		state.setString(2, u.getPassword());
+		ResultSet risultato = state.executeQuery();
+		while (risultato.next()) {
+			return true;	
+		}
+		return false;
 	}
 }
