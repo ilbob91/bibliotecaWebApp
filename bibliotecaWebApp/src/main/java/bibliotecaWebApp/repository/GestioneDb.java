@@ -11,13 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
-
-import com.mysql.cj.xdevapi.Result;
-
 import bibliotecaWebApp.model.Acquisto;
 import bibliotecaWebApp.model.Libro;
 import bibliotecaWebApp.model.Prestito;
 import bibliotecaWebApp.model.Utente;
+
 
 public class GestioneDb {
 	private Connection connessione;
@@ -39,6 +37,22 @@ public class GestioneDb {
 
 	public void close() throws SQLException {
 		this.connessione.close();
+	}
+	public void insertLibro(Libro l) throws SQLException {
+		PreparedStatement statement = connessione.prepareStatement("insert into libro (titolo, autore, prezzo, disponibilita, quantita) values (?,?,?,?,?);");
+		statement.setString(1, l.getTitolo() );
+		statement.setString(2, l.getAutore());
+		statement.setDouble(3, l.getPrezzo());
+		statement.setInt(4, l.getDisponibilita());
+		statement.setInt(5, l.getQuantita());
+		statement.execute();
+	}
+	public List<Libro> getLibri(Libro l) throws SQLException, ClassNotFoundException {
+		insertLibro(l);
+		List<Libro> elenco = stampaLibri();
+		
+		return elenco;
+
 	}
 
 	public void insertUtente(Utente u) throws SQLException {
