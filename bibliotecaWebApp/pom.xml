@@ -8,9 +8,24 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   <packaging>war</packaging>
   <properties>
 		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+		
+		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+		<java.mail.version>1.6.2</java.mail.version>
+
 	</properties>
 
 	<dependencies>
+	<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>javax.mail-api</artifactId>
+			<version>${java.mail.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>${java.mail.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>

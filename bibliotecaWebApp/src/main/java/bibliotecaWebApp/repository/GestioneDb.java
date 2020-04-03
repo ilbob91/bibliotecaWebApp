@@ -55,13 +55,15 @@ public class GestioneDb {
 
 	}
 
-	public void insertUtente(Utente u) throws SQLException {
+	public Utente insertUtente(String user, String pass) throws SQLException {
 		PreparedStatement statement = connessione
-				.prepareStatement("insert into utente (username, password) values (?,?);");
-		statement.setString(1, u.getUsername());
-		statement.setString(2, u.getPassword());
+				.prepareStatement("insert into utente (username, password, active) values (?,?,?);");
+		statement.setString(1, user);
+		statement.setString(2, pass);
+		statement.setBoolean(3, false);
 		statement.execute();
-
+		Utente u = new Utente(user, pass, false);
+        return u;
 	}
 
 	public int creaScontrino(String username) throws SQLException {
@@ -78,21 +80,43 @@ public class GestioneDb {
 		return idScontrino;
 	}
 
-	public boolean controlloUtente(Utente u) throws SQLException {
+	public boolean controlloUtente(String user, String pass) throws SQLException {
 		PreparedStatement state = connessione
 				.prepareStatement("select * from utente where username = ? and password =?;");
-		state.setString(1, u.getUsername());
-		state.setString(2, u.getPassword());
+		state.setString(1, user);
+		state.setString(2, pass);
 		ResultSet risultato = state.executeQuery();
 		while (risultato.next()) {
 			return true;
 		}
 		return false;
 	}
+	public Utente getUtente(String username, String password) throws SQLException {
+		PreparedStatement statement = connessione
+				.prepareStatement("select * from utente where username = ? and password = ?");
+		statement.setString(1, username);
+		statement.setString(2, password);
+		ResultSet executeQuery = statement.executeQuery();
+		while (executeQuery.next()) {
 
-	public boolean checkEmail(Utente u) throws SQLException {
+			String u = executeQuery.getString("username");
+			String p = executeQuery.getString("password");
+			boolean ac = executeQuery.getBoolean("active");
+		
+			return new Utente(u, p, ac);
+
+		}
+		return null;
+	}
+	public void validaUtente(String mailUtente) throws SQLException {
+		PreparedStatement prepareStatement = this.connessione.prepareStatement("UPDATE utente SET active = ? WHERE (username = ?);");
+		prepareStatement.setBoolean(1, true);
+		prepareStatement.setString(2, mailUtente);
+		prepareStatement.execute();
+	}
+	public boolean checkEmail(String user) throws SQLException {
 		PreparedStatement state = connessione.prepareStatement("select * from utente where username = ? ;");
-		state.setString(1, u.getUsername());
+		state.setString(1, user);
 		ResultSet risultato = state.executeQuery();
 		while (risultato.next()) {
 
