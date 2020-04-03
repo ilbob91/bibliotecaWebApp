@@ -161,4 +161,35 @@ public class GestioneDb {
 		}
 		return lista;
 	}
+
+	public void updateLibri(String titolo, int quantita, int qtV, int dsV) throws SQLException {
+		String query3 = "update libro set quantita=?, disponibilita=? where titolo=?;";
+		PreparedStatement statement3 = connessione.prepareStatement(query3);
+		statement3.setInt(1, qtV + quantita);
+		statement3.setInt(2, dsV + quantita);
+		statement3.setString(3, titolo);
+		statement3.execute();	
+	}
+
+	public int checkQuantita(String titolo) throws SQLException {
+		PreparedStatement state = connessione.prepareStatement("select * from libro where titolo = ?;");
+		state.setString(1, titolo);
+		ResultSet risultato = state.executeQuery();
+		while (risultato.next()) {
+			return risultato.getInt("quantita");
+		}
+
+		return 0;
+	}
+
+	public int checkDisponibilita(String titolo) throws SQLException {
+		PreparedStatement state = connessione.prepareStatement("select * from libro where titolo = ?;");
+		state.setString(1, titolo);
+		ResultSet risultato = state.executeQuery();
+		while (risultato.next()) {
+			return risultato.getInt("disponibilita");
+		}
+
+		return 0;
+	}
 }

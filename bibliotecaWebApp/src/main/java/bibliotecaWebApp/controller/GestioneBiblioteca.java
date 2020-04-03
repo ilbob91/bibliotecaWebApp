@@ -30,7 +30,7 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		req.getRequestDispatcher("aggiungi.jsp").forward(req, resp);;
+		req.getRequestDispatcher("aggiungi.jsp").forward(req, resp);
 	} else if (azione.equalsIgnoreCase("Riordina libro")) {
 		try {
 			GestioneDb g = new GestioneDb();
@@ -39,9 +39,9 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		req.getRequestDispatcher("riordina.jsp").forward(req, resp);;
+		req.getRequestDispatcher("riordina.jsp").forward(req, resp);
 	} else if(azione.equalsIgnoreCase("Invia mail")) {
-		req.getRequestDispatcher("invia_mail.jsp").forward(req, resp);;
+		req.getRequestDispatcher("invia_mail.jsp").forward(req, resp);
 	} else if (azione.equalsIgnoreCase("Stampa lista libri")) {
 		try {
 			GestioneDb g = new GestioneDb();
@@ -50,7 +50,7 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		req.getRequestDispatcher("lista_libri.jsp").forward(req, resp);;
+		req.getRequestDispatcher("lista_libri.jsp").forward(req, resp);
 	}else if (azione.equalsIgnoreCase("Stampa lista libri venduti")) {
 		try {
 			GestioneDb g = new GestioneDb();
@@ -59,7 +59,7 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		req.getRequestDispatcher("lista_libri_venduti.jsp").forward(req, resp);;
+		req.getRequestDispatcher("lista_libri_venduti.jsp").forward(req, resp);
 	}else if (azione.equalsIgnoreCase("Stampa lista libri prestati")) {
 		try {
 			GestioneDb g = new GestioneDb();
@@ -68,7 +68,7 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		req.getRequestDispatcher("lista_libri_prestati.jsp").forward(req, resp);;
+		req.getRequestDispatcher("lista_libri_prestati.jsp").forward(req, resp);
 	}
 	}
 }

@@ -24,10 +24,13 @@
                 <td><textarea rows="10" cols="39" name="contenuto"></textarea> </td>
             </tr>
             <tr>
-                <td colspan="2" align="center"><input type="submit" value="Invia"/></td>
+                <td colspan="2" align="center"><input type="submit"class="btn btn-outline-success btn-block"style="width:200px; height:45px;margin:auto" value="Torna Indietro"></td>
             </tr>
         </table>
          
     </form>
+  <form action="opzioniBiblioteca.jsp">
+  <input type="submit"class="btn btn-outline-secondary btn-block"style="width:200px; height:45px;margin:auto" value="Torna Indietro">
+ </form>
 </body>
 </html>

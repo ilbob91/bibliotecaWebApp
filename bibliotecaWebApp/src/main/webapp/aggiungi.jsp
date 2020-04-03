@@ -42,7 +42,7 @@
   </tr>
   <% } %> 	
 </table> <br>
-<form action="Aggiungi" method="post">
+<form action="aggiungi" method="post">
 <div class="input-group input-group-sm mb-3">
   <div class="input-group-prepend">
     <span class="input-group-text" id="inputGroup-sizing-sm">Titolo</span>
