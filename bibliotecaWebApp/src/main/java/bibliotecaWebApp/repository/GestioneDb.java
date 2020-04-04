@@ -16,7 +16,6 @@ import bibliotecaWebApp.model.Libro;
 import bibliotecaWebApp.model.Prestito;
 import bibliotecaWebApp.model.Utente;
 
-
 public class GestioneDb {
 	private Connection connessione;
 
@@ -38,19 +37,22 @@ public class GestioneDb {
 	public void close() throws SQLException {
 		this.connessione.close();
 	}
+
 	public void insertLibro(Libro l) throws SQLException {
-		PreparedStatement statement = connessione.prepareStatement("insert into libro (titolo, autore, prezzo, disponibilita, quantita) values (?,?,?,?,?);");
-		statement.setString(1, l.getTitolo() );
+		PreparedStatement statement = connessione.prepareStatement(
+				"insert into libro (titolo, autore, prezzo, disponibilita, quantita) values (?,?,?,?,?);");
+		statement.setString(1, l.getTitolo());
 		statement.setString(2, l.getAutore());
 		statement.setDouble(3, l.getPrezzo());
 		statement.setInt(4, l.getDisponibilita());
 		statement.setInt(5, l.getQuantita());
 		statement.execute();
 	}
+
 	public List<Libro> getLibri(Libro l) throws SQLException, ClassNotFoundException {
 		insertLibro(l);
 		List<Libro> elenco = stampaLibri();
-		
+
 		return elenco;
 
 	}
@@ -63,7 +65,7 @@ public class GestioneDb {
 		statement.setBoolean(3, false);
 		statement.execute();
 		Utente u = new Utente(user, pass, false);
-        return u;
+		return u;
 	}
 
 	public int creaScontrino(String username) throws SQLException {
@@ -91,6 +93,7 @@ public class GestioneDb {
 		}
 		return false;
 	}
+
 	public Utente getUtente(String username, String password) throws SQLException {
 		PreparedStatement statement = connessione
 				.prepareStatement("select * from utente where username = ? and password = ?");
@@ -102,18 +105,21 @@ public class GestioneDb {
 			String u = executeQuery.getString("username");
 			String p = executeQuery.getString("password");
 			boolean ac = executeQuery.getBoolean("active");
-		
+
 			return new Utente(u, p, ac);
 
 		}
 		return null;
 	}
+
 	public void validaUtente(String mailUtente) throws SQLException {
-		PreparedStatement prepareStatement = this.connessione.prepareStatement("UPDATE utente SET active = ? WHERE (username = ?);");
+		PreparedStatement prepareStatement = this.connessione
+				.prepareStatement("UPDATE utente SET active = ? WHERE (username = ?);");
 		prepareStatement.setBoolean(1, true);
 		prepareStatement.setString(2, mailUtente);
 		prepareStatement.execute();
 	}
+
 	public boolean checkEmail(String user) throws SQLException {
 		PreparedStatement state = connessione.prepareStatement("select * from utente where username = ? ;");
 		state.setString(1, user);
@@ -168,7 +174,7 @@ public class GestioneDb {
 		statement3.setInt(1, qtV + quantita);
 		statement3.setInt(2, dsV + quantita);
 		statement3.setString(3, titolo);
-		statement3.execute();	
+		statement3.execute();
 	}
 
 	public int checkQuantita(String titolo) throws SQLException {
@@ -194,7 +200,8 @@ public class GestioneDb {
 	}
 
 	public List<Prestito> ordinaData() throws SQLException {
-		PreparedStatement state = connessione.prepareStatement("select *  from prestito ORDER BY STR_TO_DATE(dataAffitto,\"%d/%m/%Y\") asc;");
+		PreparedStatement state = connessione
+				.prepareStatement("select *  from prestito ORDER BY STR_TO_DATE(dataAffitto,\"%d/%m/%Y\") asc;");
 		ResultSet risultato = state.executeQuery();
 		List<Prestito> lista = new ArrayList<>();
 		while (risultato.next()) {
@@ -204,4 +211,4 @@ public class GestioneDb {
 		}
 		return lista;
 	}
-	}
+}

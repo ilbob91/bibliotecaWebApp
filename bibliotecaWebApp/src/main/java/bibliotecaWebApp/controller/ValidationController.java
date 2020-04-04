@@ -29,8 +29,10 @@ public class ValidationController extends HttpServlet {
 			e.printStackTrace();
 		}
 
-	} private String scriviRispostaUtenteAttivato(String mailUtente) {
-		
+	}
+
+	private String scriviRispostaUtenteAttivato(String mailUtente) {
+
 		int indexOf = mailUtente.indexOf('@');
 		String parteFinaleMail = mailUtente.substring(indexOf);
 

@@ -12,38 +12,31 @@
 <body>
 <% List<Prestito> listaPrestiti = (List<Prestito>)request.getAttribute("listaLibriPrestati"); %>
 
-  
-   
- 
 
-<table  class="table table-striped"> 
-   
-  <tr>
-   <th>Id Libro </th>
-   <th>Titolo </th>
-   <th>Data Affitto</th>
-   <th>Username </th>
-  
-  </tr>
-  <% for(Prestito p : listaPrestiti) { %>
-  
-  <tr>
-    <td>
-    <%=p.getIdLibro()%>
-    </td>
-    <td>
-    <%=p.getTitolo() %>
-    </td>  
-     <td>
-    <%=p.getDataAffitto() %>
-    </td>    
-     <td>
-    <%=p.getUsername()%>
-    </td>  
-  </tr>
-  <% } %> 
-	
-</table> <br>
+
+
+
+	<table class="table table-striped">
+
+		<tr>
+			<th>Id Libro</th>
+			<th>Titolo</th>
+			<th>Data Affitto</th>
+			<th>Username</th>
+
+		</tr>
+		<% for(Prestito p : listaPrestiti) { %>
+
+		<tr>
+			<td><%=p.getIdLibro()%></td>
+			<td><%=p.getTitolo() %></td>
+			<td><%=p.getDataAffitto() %></td>
+			<td><%=p.getUsername()%></td>
+		</tr>
+		<% } %>
+
+	</table>
+	<br>
 <form action="opzioniBiblioteca.jsp">
   <input type="submit" class="btn btn-outline-secondary btn-block" style="width:150px; height:50px;margin:auto"  value="Torna Indietro">
 

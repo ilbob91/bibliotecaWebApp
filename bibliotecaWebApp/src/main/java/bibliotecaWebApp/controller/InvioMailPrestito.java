@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import bibliotecaWebApp.service.EmailUtility;
 
-
 @WebServlet(urlPatterns = "/invioMailPrestito")
-public class InvioMailPrestito extends HttpServlet{
+public class InvioMailPrestito extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		getServletContext().getRequestDispatcher("login.jsp").forward(req, resp);
 	}
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String indirizzo = req.getParameter("indirizzo");
@@ -35,6 +35,4 @@ public class InvioMailPrestito extends HttpServlet{
 			getServletContext().getRequestDispatcher("/opzioniBiblioteca.jsp").forward(req, resp);
 		}
 	}
-	}
-
-
+}

@@ -33,11 +33,11 @@ public class Login extends HttpServlet {
 			String azione = req.getParameter("azione");
 
 			if ("Entra".equalsIgnoreCase(azione))
-                 
+
 				if (user.equals(getInitParameter("username")) && pass.equals(getInitParameter("password"))) {
 					req.getRequestDispatcher("opzioniBiblioteca.jsp").forward(req, resp);
 
-				} else if (!gest.controlloUtente(user,pass)) {
+				} else if (!gest.controlloUtente(user, pass)) {
 					req.setAttribute("messaggio", "mail o password errata. Riprova oppure REGISTRATI");
 					req.getRequestDispatcher("login.jsp").forward(req, resp);
 
@@ -54,14 +54,15 @@ public class Login extends HttpServlet {
 				}
 
 			else if ("Registrati".equalsIgnoreCase(azione)) {
-				
-					if (gest.checkEmail(user) && !user.equals(getInitParameter("username"))) {
-						gest.insertUtente(user, pass);
-						EmailUtility.sendEmail(user, "Conferma Mail", generaLinkValidazioneUtente(user));
-						gest.close();
-						req.setAttribute("messaggio", "Ti è stata mandata una mail, clicca il link contenuto in essa per confermare la registrazione");
-						req.getRequestDispatcher("login.jsp").forward(req, resp);
-					
+
+				if (gest.checkEmail(user) && !user.equals(getInitParameter("username"))) {
+					gest.insertUtente(user, pass);
+					EmailUtility.sendEmail(user, "Conferma Mail", generaLinkValidazioneUtente(user));
+					gest.close();
+					req.setAttribute("messaggio",
+							"Ti è stata mandata una mail, clicca il link contenuto in essa per confermare la registrazione");
+					req.getRequestDispatcher("login.jsp").forward(req, resp);
+
 				} else {
 					if (user.equals(getInitParameter("username"))) {
 						req.setAttribute("messaggio", "Per entrare come amministratore premi ENTRA");
@@ -72,8 +73,8 @@ public class Login extends HttpServlet {
 					}
 
 				}
-					}
-			
+			}
+
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

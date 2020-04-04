@@ -11,12 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import bibliotecaWebApp.model.Libro;
 import bibliotecaWebApp.repository.GestioneDb;
+
 @WebServlet(name = "riordina", urlPatterns = "/riordina")
-public class Riordina extends HttpServlet{
+public class Riordina extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getRequestDispatcher("login.jsp").forward(req, resp);
 	}
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String titolo = req.getParameter("titolo");
@@ -29,11 +31,10 @@ public class Riordina extends HttpServlet{
 			req.setAttribute("listaLibri", gest.stampaLibri());
 			req.setAttribute("messaggio", "quantità e disponibilità aggiornate");
 			gest.close();
-		}catch (ClassNotFoundException | SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-	}  
-		
-		req.getRequestDispatcher("riordina.jsp").forward(req, resp);
-}
-	}
+		}
 
+		req.getRequestDispatcher("riordina.jsp").forward(req, resp);
+	}
+}
