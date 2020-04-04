@@ -10,6 +10,7 @@
 <title>Stampa Libri Prestati</title>
 </head>
 <body>
+<%@include file="navbar.jsp" %>
 <% List<Prestito> listaPrestiti = (List<Prestito>)request.getAttribute("listaLibriPrestati"); %>
 
 

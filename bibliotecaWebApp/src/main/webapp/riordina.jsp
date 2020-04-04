@@ -15,6 +15,7 @@
 <title>Riordina Libri</title>
 </head>
 <body>
+<%@include file="navbar.jsp" %>
 	<div class="container">
 		<div class="row">
 			<div class="col-xl align-self-center ">
@@ -60,7 +61,7 @@
 				<%
 					}
 				%>
-				<h2>Riordina Libri</h2>
+				
 				<br>
 				<form action="riordina" method="post">
 					<div class="input-group input-group-sm mb-3">

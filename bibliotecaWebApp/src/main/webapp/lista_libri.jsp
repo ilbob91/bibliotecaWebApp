@@ -14,6 +14,7 @@
 <title>Stampa Libri</title>
 </head>
 <body>
+<%@include file="navbar.jsp" %>
 	<%
 		List<Libro> listaLibri = (List<Libro>) request.getAttribute("listaLibri");
 	%>

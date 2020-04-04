@@ -13,6 +13,7 @@
 <title>Stampa Libri Venduti</title>
 </head>
 <body>
+<%@include file="navbar.jsp" %>
 	<%
 		List<Acquisto> listaAcquisti = (List<Acquisto>) request.getAttribute("listaLibriVenduti");
 	%>

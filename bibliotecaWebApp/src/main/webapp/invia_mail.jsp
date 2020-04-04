@@ -11,6 +11,7 @@
 <title>Invio mail</title>
 </head>
 <body>
+<%@include file="navbar.jsp" %>
 <% List<Prestito> listaPrestiti = (List<Prestito>)request.getAttribute("listaLibriPrestati"); %>
 	<div class="container">
 		<div class="row">

@@ -12,6 +12,8 @@
 <title>Gestione Biblioteca</title>
 </head>
 <body>
+<%@include file="navbar.jsp" %>
+
 	<%
 		String messaggio = (String) request.getAttribute("messaggio");
 		if (messaggio != null) {

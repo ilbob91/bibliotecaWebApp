@@ -13,7 +13,7 @@
 <title>Aggiungi un Libro</title>
 </head>
 <body>
-	<h1>Aggiungi Libro</h1>
+	<%@include file="navbar.jsp" %>
 	<%
 		List<Libro> listaLibri = (List<Libro>) request.getAttribute("listaLibri");
 	%>
