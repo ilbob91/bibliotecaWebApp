@@ -41,6 +41,15 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 		}
 		req.getRequestDispatcher("riordina.jsp").forward(req, resp);
 	} else if(azione.equalsIgnoreCase("Invia mail")) {
+		GestioneDb g;
+		try {
+			g = new GestioneDb();
+			req.setAttribute("listaLibriPrestati", g.ordinaData());
+			g.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		
 		req.getRequestDispatcher("invia_mail.jsp").forward(req, resp);
 	} else if (azione.equalsIgnoreCase("Stampa lista libri")) {
 		try {

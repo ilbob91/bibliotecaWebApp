@@ -192,4 +192,16 @@ public class GestioneDb {
 
 		return 0;
 	}
-}
+
+	public List<Prestito> ordinaData() throws SQLException {
+		PreparedStatement state = connessione.prepareStatement("select *  from prestito ORDER BY STR_TO_DATE(dataAffitto,\"%d/%m/%Y\") asc;");
+		ResultSet risultato = state.executeQuery();
+		List<Prestito> lista = new ArrayList<>();
+		while (risultato.next()) {
+			Prestito a = new Prestito(risultato.getInt("idLibro"), risultato.getString("titolo"),
+					risultato.getString("dataAffitto"), risultato.getString("username"));
+			lista.add(a);
+		}
+		return lista;
+	}
+	}

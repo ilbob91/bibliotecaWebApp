@@ -12,8 +12,10 @@
 <body>
 <h1>Aggiungi Libro</h1>
 <% List<Libro> listaLibri = (List<Libro>)request.getAttribute("listaLibri"); %>
-
-<table> 
+<div class= "container">
+ <div class="row">
+    <div class="col-xl align-self-center ">
+<table class="table table-striped"> 
    
   <tr>
    <th>Titolo </th>
@@ -41,7 +43,9 @@
     </td>       
   </tr>
   <% } %> 	
-</table> <br>
+</table> 
+</div>
+ <div class="col-xl align-self-center ">
 <form action="aggiungi" method="post">
 <div class="input-group input-group-sm mb-3">
   <div class="input-group-prepend">
@@ -78,10 +82,9 @@
   </form><br><br>
   <form action="opzioniBiblioteca.jsp">
   <input type="submit" class="btn btn-outline-secondary" value="Torna Indietro">
-
-
-  
-
 </form>
+</div>
+</div>
+</div>
 </body>
 </html>
