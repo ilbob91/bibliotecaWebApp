@@ -12,52 +12,56 @@
 <title>Gestione Biblioteca</title>
 </head>
 <body>
-<%@include file="navbar.jsp" %>
+	<%@include file="navbar.jsp"%>
+	<div class="container">
 
-	<%
-		String messaggio = (String) request.getAttribute("messaggio");
-		if (messaggio != null) {
-	%>
+		<div class="row">
+			<div class="col-md-12">
+				<h1>
+					<p class="text-md-center">Scegli</p>
+				</h1>
+			</div>
+		</div>
+	</div>
+				<%
+					String messaggio = (String) request.getAttribute("messaggio");
+					if (messaggio != null) {
+				%>
 
-	<p class="text-md-center text-danger"><%=messaggio%></p>
+				<p class="text-md-center text-danger"><%=messaggio%></p>
 
-	<%
-		}
-	%>
-	<br>
-	<h2>
-		<p class="text-xl-center">Scegli</p>
-	</h2>
-	<br>
-	<br>
-	<form action="gestioneBiblioteca" method="post">
-		<input type="submit" class="btn btn-outline-primary btn-block"
-			style="width: 300px; height: 60px; margin: auto" name="azione"
-			value="Aggiungi un libro"> <br> <input type="submit"
-			class="btn btn-outline-primary btn-block"
-			style="width: 300px; height: 60px; margin: auto" name="azione"
-			value="Riordina libro"> <br> <input type="submit"
-			class="btn btn-outline-primary btn-block"
-			style="width: 300px; height: 60px; margin: auto" name="azione"
-			value="Invia mail"> <br> <input type="submit"
-			class="btn btn-outline-primary btn-block"
-			style="width: 300px; height: 60px; margin: auto" name="azione"
-			value="Stampa lista libri"> <br> <input type="submit"
-			class="btn btn-outline-primary btn-block"
-			style="width: 300px; height: 60px; margin: auto" name="azione"
-			value="Stampa lista libri venduti"> <br> <input
-			type="submit" class="btn btn-outline-primary btn-block"
-			style="width: 300px; height: 60px; margin: auto" name="azione"
-			value="Stampa lista libri prestati">
-	</form>
-	<br>
+				<%
+					}
+				%>
+				<br> <br> <br>
+				<form action="gestioneBiblioteca" method="post">
+					<input type="submit" class="btn btn-outline-primary btn-block"
+						style="width: 300px; height: 60px; margin: auto" name="azione"
+						value="Aggiungi un libro"> <br> <input type="submit"
+						class="btn btn-outline-primary btn-block"
+						style="width: 300px; height: 60px; margin: auto" name="azione"
+						value="Riordina libro"> <br> <input type="submit"
+						class="btn btn-outline-primary btn-block"
+						style="width: 300px; height: 60px; margin: auto" name="azione"
+						value="Invia mail"> <br> <input type="submit"
+						class="btn btn-outline-primary btn-block"
+						style="width: 300px; height: 60px; margin: auto" name="azione"
+						value="Stampa lista libri"> <br> <input type="submit"
+						class="btn btn-outline-primary btn-block"
+						style="width: 300px; height: 60px; margin: auto" name="azione"
+						value="Stampa lista libri venduti"> <br> <input
+						type="submit" class="btn btn-outline-primary btn-block"
+						style="width: 300px; height: 60px; margin: auto" name="azione"
+						value="Stampa lista libri prestati">
+				</form>
+				<br> <br>
 
-
-	<br>
-
-	<form action="login.jsp">
-		<input type="submit" class="btn btn-outline-secondary btn-block"
-			style="width: 200px; height: 45px; margin: auto"
-			value="Torna Indietro">
+				<form action="login.jsp">
+					<input type="submit" class="btn btn-outline-secondary btn-block"
+						style="width: 200px; height: 45px; margin: auto"
+						value="Torna Indietro">
+				</form>
+			
+		
 </body>
 </html>
