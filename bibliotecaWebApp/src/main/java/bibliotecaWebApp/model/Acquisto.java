@@ -3,8 +3,6 @@ package bibliotecaWebApp.model;
 public class Acquisto {
 	private int idAcquisto;
 	
-	private int idLibro;
-	
 	private String titolo;
 	
 	private int quantita;
@@ -15,8 +13,8 @@ public class Acquisto {
 	
 	private int idScontrino;
 
-	public Acquisto(int idLibro, String titolo, int quantita, double prezzo, String username, int idScontrino) {
-		this.idLibro = idLibro;
+	public Acquisto( String titolo, int quantita, double prezzo, String username, int idScontrino) {
+		
 		this.titolo = titolo;
 		this.quantita = quantita;
 		this.prezzo = prezzo;
@@ -32,13 +30,6 @@ public class Acquisto {
 		this.idAcquisto = idAcquisto;
 	}
 
-	public int getIdLibro() {
-		return idLibro;
-	}
-
-	public void setIdLibro(int idLibro) {
-		this.idLibro = idLibro;
-	}
 
 	public String getTitolo() {
 		return titolo;

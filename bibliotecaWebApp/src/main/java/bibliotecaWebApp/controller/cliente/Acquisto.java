@@ -85,7 +85,7 @@ public class Acquisto extends HttpServlet {
 			}
 			req.setAttribute("username", username);
 			req.setAttribute("idScontrino", idScontrino);
-			req.getRequestDispatcher("paginaCliente.jsp").forward(req, resp);
+			req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
 		}
 	}
 }

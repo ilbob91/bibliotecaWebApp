@@ -15,7 +15,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<%@include file="navbarCliente.jsp"%>
 	<%
 		List<Scontrino> listaScontrini = (List<Scontrino>) request.getAttribute("listaScontrini");
 	%>
@@ -44,7 +44,7 @@
 			<td><%=s.getCostoTotale()%></td>
 			<td>
 				<form action="opzioniCliente" method="post">
-					<input type="submit" name="action" value="Dettagli"> <input
+					<input type="submit" class="btn btn-outline-secondary" name="action" value="Dettagli"> <input
 						type="hidden" id="username" name="username" value=<%=nomeUtente%>>
 					<input type="number" hidden="true" id="id" name="id"
 						value=<%=s.getIdScontrino()%>>

@@ -15,7 +15,7 @@ public class TornaIndietro extends HttpServlet {
 		
 		
 		req.setAttribute("username", req.getParameter("username"));
-		req.getRequestDispatcher("paginaCliente.jsp").forward(req, resp);
+		req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
 		
 	}
 	

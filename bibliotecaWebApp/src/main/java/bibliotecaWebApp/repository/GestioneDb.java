@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -76,7 +77,7 @@ public class GestioneDb {
 	public int creaScontrino(String username) throws SQLException {
 
 		PreparedStatement state = connessione
-				.prepareStatement("insert into scontrino (idScontrino, data, nome) values (?,?,?);");
+				.prepareStatement("insert into scontrino (idScontrino, data, username) values (?,?,?);");
 		Date data = new Date();
 		DateFormat formato = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY);
 		int idScontrino = (int) (Math.random() * 1000 + Math.random() * 1000);
@@ -153,7 +154,7 @@ public class GestioneDb {
 		ResultSet risultato = state.executeQuery();
 		List<Acquisto> lista = new ArrayList<>();
 		while (risultato.next()) {
-			Acquisto a = new Acquisto(risultato.getInt("idLibro"), risultato.getString("titolo"),
+			Acquisto a = new Acquisto(risultato.getString("titolo"),
 					risultato.getInt("quantita"), risultato.getDouble("prezzo"), risultato.getString("username"),
 					risultato.getInt("idScontrino"));
 			lista.add(a);
@@ -238,7 +239,7 @@ public class GestioneDb {
 	} 
 	
 	public void updateTabellaLibro (String titolo, int quantita, int disponibilita) throws SQLException {
-		PreparedStatement state = connessione.prepareStatement("update libro set quantita= ? and disponibilita=? where titolo = ?;");
+		PreparedStatement state = connessione.prepareStatement("update libro set quantita= ?, disponibilita=? where titolo = ?;");
 		state.setInt(1, quantita);
 		state.setInt(2, disponibilita);
 		state.setString(3, titolo);
@@ -323,7 +324,7 @@ public class GestioneDb {
 	       return idTessera;
 	}
 		public void inserimentoTabellaAffitto(String titolo, String username, int idTessera, int quantita) throws SQLException {
-			PreparedStatement state = connessione.prepareStatement("insert into prestito (titolo, username, idTessera, quantita, dataAffitto) values (?, ?, ?, ?, ?);");
+			PreparedStatement state = connessione.prepareStatement("insert into prestito (titolo, username, idTessera, quantita, dataAffitto, dataDiFine) values (?, ?, ?, ?, ?, ?);");
 			java.util.Date data = new java.util.Date();
 			DateFormat formato = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY);
 			state.setString(1, titolo);
@@ -331,6 +332,7 @@ public class GestioneDb {
 			state.setInt(3, idTessera);
 			state.setInt(4, quantita);
 			state.setString(5, formato.format(data));
+			state.setString(6, calcoloData(formato.format(data)) );
 			state.execute();
 		}
 		public void updateDisponibilitaLibri(String titolo, int quantita) throws SQLException {
@@ -374,7 +376,7 @@ public class GestioneDb {
 	public  List<Prestito> stampaLibriInPrestito(int idTessera)
 			throws SQLException {
 		PreparedStatement statement = connessione
-				.prepareStatement("select username, titolo, quantita, dataAffitto from prestito where idTessera = ?;");
+				.prepareStatement("select username, titolo, quantita, dataAffitto, dataDiFine from prestito where idTessera = ?;");
 		statement.setInt(1, idTessera);
 
 		ResultSet risultatoQuery = statement.executeQuery();
@@ -410,6 +412,19 @@ public class GestioneDb {
 		return lista;
 	}
 	
+	public String calcoloData(String dataInizio) {
+		String[] d = dataInizio.split("/");
+		System.out.println(d[0] + " , " + d[1] + " , " + d[2]);
+		Calendar data1 = Calendar.getInstance();
 
+		data1.set(Calendar.DATE, Integer.parseInt(d[0]));
+		data1.set(Calendar.MONTH, Integer.parseInt(d[1]));
+		data1.set(Calendar.YEAR, Integer.parseInt(d[2]));
+
+		data1.add(Calendar.DATE, 30);
+
+		return data1.get(Calendar.DATE) + "/" + data1.get(Calendar.MONTH) + "/" + data1.get(Calendar.YEAR);
+
+	}
 	
 }

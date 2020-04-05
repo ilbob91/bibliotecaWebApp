@@ -37,6 +37,7 @@
 			
 			<th>Titolo</th>
 			<th>Data Affitto</th>
+			<th>Data Fine</th>
 			<th>Username</th>
 			<th>Sollecitazione</th>
 
@@ -49,6 +50,7 @@
 			
 			<td><%=p.getTitolo()%></td>
 			<td><%=p.getDataAffitto()%></td>
+			<td><%=p.getDataDiFine()%></td>
 			<td><%=p.getUsername()%></td>
 			<td>
 				<form action="auto" method="post">

@@ -82,7 +82,7 @@ public class Affitto extends HttpServlet{
 				e.printStackTrace();
 			} req.setAttribute("username", username);
 			req.setAttribute("idTessera", idTessera);
-			req.getRequestDispatcher("paginaCliente.jsp").forward(req, resp);
+			req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
 		} 
 	}
 	}

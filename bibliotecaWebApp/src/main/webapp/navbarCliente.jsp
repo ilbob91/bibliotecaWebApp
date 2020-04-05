@@ -22,12 +22,16 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="http://localhost:8080/bibliotecaWebApp/">Registrati! </a>
+        <a class="nav-link" href="http://localhost:8080/bibliotecaWebApp/">Home </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="http://localhost:8080/bibliotecaWebApp/about.jsp">About</a>
       </li>
     </ul>
+     <form action="login.jsp" class="form-inline my-2 my-lg-0">
+      
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">LogOut</button>
+    </form>
   </div>
 </nav>
 </body>
