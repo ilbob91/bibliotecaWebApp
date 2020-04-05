@@ -15,7 +15,10 @@ import java.util.Locale;
 import java.util.Properties;
 import bibliotecaWebApp.model.Acquisto;
 import bibliotecaWebApp.model.Libro;
+import bibliotecaWebApp.model.LibroVenduto;
 import bibliotecaWebApp.model.Prestito;
+import bibliotecaWebApp.model.Scontrino;
+import bibliotecaWebApp.model.Tessera;
 import bibliotecaWebApp.model.Utente;
 
 public class GestioneDb {
@@ -163,8 +166,8 @@ public class GestioneDb {
 		ResultSet risultato = state.executeQuery();
 		List<Prestito> lista = new ArrayList<>();
 		while (risultato.next()) {
-			Prestito a = new Prestito(risultato.getInt("idLibro"), risultato.getString("titolo"),
-					risultato.getString("dataAffitto"), risultato.getString("username"));
+			Prestito a = new Prestito(risultato.getString("titolo"), risultato.getString("username"), risultato.getInt("idTessera"), 
+					risultato.getInt("quantita"), risultato.getString("dataAffitto"), risultato.getString("dataDiFine"));
 			lista.add(a);
 		}
 		return lista;
@@ -201,16 +204,212 @@ public class GestioneDb {
 		return 0;
 	}
 
+	
+	public boolean controlloQuantitaLibri (String titolo, int quantita, List<Libro> lista) throws SQLException {
+		
+		for (Libro libro : lista) {
+			
+		if (titolo.equalsIgnoreCase(libro.getTitolo()) && quantita > libro.getDisponibilita()) {
+			return false;
+		}
+		} return true;
+		
+	}
+	public void inserimentoTabellaAcquisto (String titolo, int quantita, String username, int idScontrino) throws SQLException {
+		PreparedStatement state = connessione.prepareStatement("insert into acquisto (titolo, quantita, username, idscontrino) values (?, ?, ?, ?);");
+		state.setString(1, titolo);
+		state.setInt(2, quantita);
+		state.setString(3, username);
+		state.setInt(4, idScontrino);
+		state.execute();
+	} 
+	public void updateQuantitaLibri (String titolo, int quantita) throws SQLException {
+		List<Libro> lista = stampaLibri();
+		for (int i = 0; i < lista.size(); i++) {
+			if (lista.get(i).getTitolo().equalsIgnoreCase(titolo)) {
+				int nuovaQuantita = lista.get(i).getQuantita() - quantita;
+						int nuovaDisponibilita = lista.get(i).getDisponibilita() - quantita;
+						lista.get(i).setQuantita(nuovaQuantita);
+						lista.get(i).setDisponibilita(nuovaDisponibilita);
+						updateTabellaLibro(titolo, nuovaQuantita, nuovaDisponibilita);
+						
+			}
+		}
+	} 
+	
+	public void updateTabellaLibro (String titolo, int quantita, int disponibilita) throws SQLException {
+		PreparedStatement state = connessione.prepareStatement("update libro set quantita= ? and disponibilita=? where titolo = ?;");
+		state.setInt(1, quantita);
+		state.setInt(2, disponibilita);
+		state.setString(3, titolo);
+		state.execute();
+	}
+	public  double getPrezzo( int idScontrino) throws SQLException {
+	    double costo = 0;
+	    String query = "select acquisto.quantita,libro.prezzo from acquisto inner join libro on acquisto.titolo=libro.titolo where acquisto.idScontrino=?;";
+	    PreparedStatement statement = connessione.prepareStatement(query);
+	    statement.setInt(1, idScontrino);
+
+	    ResultSet risultato = statement.executeQuery();
+	    while (risultato.next()) {
+
+	        costo = costo + (risultato.getInt(1) * risultato.getDouble(2));
+
+	    }
+	    return costo;
+
+	}
+
+
+	public boolean totaleScontrino(int idScontrino, double spesa) throws SQLException {
+		String query = "update scontrino set prezzoTotale=? where idScontrino=?;";
+	    PreparedStatement statement = connessione.prepareStatement(query);
+	    statement.setDouble(1, spesa);
+	    statement.setInt(2, idScontrino);
+	    statement.execute();
+	    return true;
+		
+	}
+		public  List<Scontrino> stampaScontrini(String username) throws SQLException {
+			PreparedStatement statement = connessione.prepareStatement("select * from scontrino where username = ?;");
+			statement.setString(1, username);
+
+			ResultSet risultatoQuery = statement.executeQuery();
+			List<Scontrino> elenco = new ArrayList<>();
+			while (risultatoQuery.next()) {
+				int idScontrino = risultatoQuery.getInt("idScontrino");
+				String data = risultatoQuery.getString("data");
+				double spesa = risultatoQuery.getDouble("prezzoTotale");
+
+				Scontrino scontrino = new Scontrino(idScontrino, username, data, spesa);
+				elenco.add(scontrino);
+
+			}
+
+			return elenco;
+
+		}
+		public  List<LibroVenduto> stampaProdottiScontrino(int idScontrino)
+				throws SQLException {
+			PreparedStatement statement = connessione
+					.prepareStatement("select username, titolo, quantita from acquisto where idScontrino = ?;");
+			statement.setInt(1, idScontrino);
+
+			ResultSet risultatoQuery = statement.executeQuery();
+			List<LibroVenduto> elenco = new ArrayList<>();
+			while (risultatoQuery.next()) {
+				String username = risultatoQuery.getString("username");
+				String titolo = risultatoQuery.getString("titolo");
+				int quantita = risultatoQuery.getInt("quantita");
+				
+
+				LibroVenduto p = new LibroVenduto(idScontrino, username, titolo, quantita);
+				elenco.add(p);
+
+			}
+
+			return elenco;
+
+		}
+		public int creaTessera(String username) throws SQLException {
+		PreparedStatement state = connessione.prepareStatement("insert into tessera (idTessera, username, dataAffitto) values (?,?,?);");
+		java.util.Date data = new java.util.Date();
+		   DateFormat formato = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY);
+	       int idTessera = (int) (Math.random() * 2000 + Math.random() * 1000);
+	       state.setInt(1, idTessera);
+	       state.setString(2, username);
+	       state.setString(3, formato.format(data));
+	       state.execute();
+	       return idTessera;
+	}
+		public void inserimentoTabellaAffitto(String titolo, String username, int idTessera, int quantita) throws SQLException {
+			PreparedStatement state = connessione.prepareStatement("insert into prestito (titolo, username, idTessera, quantita, dataAffitto) values (?, ?, ?, ?, ?);");
+			java.util.Date data = new java.util.Date();
+			DateFormat formato = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY);
+			state.setString(1, titolo);
+			state.setString(2, username);
+			state.setInt(3, idTessera);
+			state.setInt(4, quantita);
+			state.setString(5, formato.format(data));
+			state.execute();
+		}
+		public void updateDisponibilitaLibri(String titolo, int quantita) throws SQLException {
+			List<Libro> lista = stampaLibri();
+			for (int i = 0; i < lista.size(); i++) {
+				if (lista.get(i).getTitolo().equalsIgnoreCase(titolo)) {
+							int nuovaDisponibilita = lista.get(i).getDisponibilita() - quantita;
+					
+							lista.get(i).setDisponibilita(nuovaDisponibilita);
+							updateTabellaLibroSuDisp(titolo, nuovaDisponibilita);		
+				} 
+
+			
+		} 
+	}  public void updateTabellaLibroSuDisp (String titolo, int disponibilita) throws SQLException {
+		PreparedStatement state = connessione.prepareStatement("update libro set  disponibilita=? where titolo = ?;");
+		state.setInt(1, disponibilita);
+		state.setString(2, titolo);
+		state.execute();
+	}
+
+	public List<Tessera> stampaPrestiti(String username) throws SQLException {
+		PreparedStatement statement = connessione.prepareStatement("select * from tessera where username = ?;");
+		statement.setString(1, username);
+
+		ResultSet risultatoQuery = statement.executeQuery();
+		List<Tessera> elenco = new ArrayList<>();
+		while (risultatoQuery.next()) {
+			
+			int idTessera = risultatoQuery.getInt("idTessera");
+
+			String dataAffitto = risultatoQuery.getString("dataAffitto");
+
+			Tessera tessera = new Tessera(idTessera, username, dataAffitto);
+			elenco.add(tessera);
+
+		}
+
+		return elenco;
+	}
+	public  List<Prestito> stampaLibriInPrestito(int idTessera)
+			throws SQLException {
+		PreparedStatement statement = connessione
+				.prepareStatement("select username, titolo, quantita, dataAffitto from prestito where idTessera = ?;");
+		statement.setInt(1, idTessera);
+
+		ResultSet risultatoQuery = statement.executeQuery();
+		List<Prestito> elenco = new ArrayList<>();
+		
+		while (risultatoQuery.next()) {
+			String username = risultatoQuery.getString("username");
+			String titolo = risultatoQuery.getString("titolo");
+			int quantita = risultatoQuery.getInt("quantita");
+			String dataAffitto = risultatoQuery.getString("dataAffitto");
+			String dataDiFine = risultatoQuery.getString("dataDiFine");
+
+			Prestito l = new Prestito(titolo, username, idTessera, quantita, dataAffitto,dataDiFine);
+			elenco.add(l);
+
+		}
+
+		return elenco;
+
+	}
+	
+
 	public List<Prestito> ordinaData() throws SQLException {
 		PreparedStatement state = connessione
 				.prepareStatement("select *  from prestito ORDER BY STR_TO_DATE(dataAffitto,\"%d/%m/%Y\") asc;");
 		ResultSet risultato = state.executeQuery();
 		List<Prestito> lista = new ArrayList<>();
 		while (risultato.next()) {
-			Prestito a = new Prestito(risultato.getInt("idLibro"), risultato.getString("titolo"),
-					risultato.getString("dataAffitto"), risultato.getString("username"));
-			lista.add(a);
+			Prestito l  = new Prestito( risultato.getString("titolo"), risultato.getString("username"), risultato.getInt("idTessera"), risultato.getInt("quantita"),
+					risultato.getString("dataAffitto"), risultato.getString("dataDiFine"));
+			lista.add(l);
 		}
 		return lista;
 	}
+	
+
+	
 }

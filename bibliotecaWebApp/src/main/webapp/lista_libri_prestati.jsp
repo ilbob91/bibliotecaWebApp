@@ -34,7 +34,7 @@
 	<table class="table table-striped">
 
 		<tr>
-			<th>Id Libro</th>
+			
 			<th>Titolo</th>
 			<th>Data Affitto</th>
 			<th>Username</th>
@@ -46,7 +46,7 @@
 		%>
 
 		<tr>
-			<td><%=p.getIdLibro()%></td>
+			
 			<td><%=p.getTitolo()%></td>
 			<td><%=p.getDataAffitto()%></td>
 			<td><%=p.getUsername()%></td>

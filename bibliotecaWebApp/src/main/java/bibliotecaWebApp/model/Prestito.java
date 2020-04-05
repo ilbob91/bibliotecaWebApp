@@ -2,67 +2,62 @@ package bibliotecaWebApp.model;
 
 public class Prestito {
 
-	private int idPrestito;
-	
-	private int idLibro;
-	
 	private String titolo;
-	
-	private String dataAffitto;
-	
 	private String username;
+	private int idTessera;
+	private int quantita;
+	private String dataAffitto;
+	private String dataDiFine;
 	
 	
-	
-
-	public Prestito(int idLibro, String titolo, String dataAffitto, String username) {
-		this.idLibro = idLibro;
+	public Prestito(String titolo, String username, int idTessera, int quantita, String dataAffitto, String dataDiFine) {
 		this.titolo = titolo;
-		this.dataAffitto = dataAffitto;
 		this.username = username;
+		this.idTessera = idTessera;
+		this.quantita = quantita;
+		this.dataAffitto = dataAffitto;
+		this.dataDiFine = dataDiFine;
+	}
+	
+	public String getDataDiFine() {
+		return dataDiFine;
 	}
 
-	public int getIdPrestito() {
-		return idPrestito;
-	}
-
-	public void setIdPrestito(int idPrestito) {
-		this.idPrestito = idPrestito;
-	}
-
-	public int getIdLibro() {
-		return idLibro;
-	}
-
-	public void setIdLibro(int idLibro) {
-		this.idLibro = idLibro;
+	public void setDataDiFine(String dataDiFine) {
+		this.dataDiFine = dataDiFine;
 	}
 
 	public String getTitolo() {
 		return titolo;
 	}
-
 	public void setTitolo(String titolo) {
 		this.titolo = titolo;
 	}
-
 	public String getDataAffitto() {
 		return dataAffitto;
 	}
-
 	public void setDataAffitto(String dataAffitto) {
 		this.dataAffitto = dataAffitto;
 	}
-
 	public String getUsername() {
 		return username;
 	}
-
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	public int getIdTessera() {
+		return idTessera;
+	}
+	public void setIdTessera(int idTessera) {
+		this.idTessera = idTessera;
+	}
+	public int getQuantita() {
+		return quantita;
+	}
+	public void setQuantita(int quantita) {
+		this.quantita = quantita;
+	}
 	
 	
-	
-	
-}
+	}
+
