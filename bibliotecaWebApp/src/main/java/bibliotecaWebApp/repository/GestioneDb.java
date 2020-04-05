@@ -2,12 +2,14 @@ package bibliotecaWebApp.repository;
 
 import java.io.IOException;
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -72,7 +74,7 @@ public class GestioneDb {
 
 		PreparedStatement state = connessione
 				.prepareStatement("insert into scontrino (idScontrino, data, nome) values (?,?,?);");
-		java.util.Date data = new java.util.Date();
+		Date data = new Date();
 		DateFormat formato = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY);
 		int idScontrino = (int) (Math.random() * 1000 + Math.random() * 1000);
 		state.setInt(1, idScontrino);
