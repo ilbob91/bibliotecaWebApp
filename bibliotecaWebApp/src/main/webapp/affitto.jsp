@@ -108,17 +108,23 @@
 					<input type="submit" class="btn btn-outline-danger"
 						style="width: 120px; height: 45px;" name="azione" value="Affitta">
 					<input type="hidden" id="username" name="username" value=<%=nome%>>
+					<%
+					if(request.getAttribute("idTessera") != null){
+				%>
 					<input type="hidden" id="idTessera" name="idTessera"
 						value=<%=(int) request.getAttribute("idTessera")%>> <br>
 					<br>
-				</form>
-				<form action="tornaIndietro" method="post">
-					<input type="submit" class="btn btn-outline-secondary"
+				</form><%}%>
+				<form action="affitto" method="post">
+					<input type="submit" class="btn btn-outline-secondary" name= "azione"
 						value="Torna Indietro"> <input type="hidden" id="username"
-						name="username" value=<%=nome%>> <input type="hidden"
-						id="idTessera" name="idTessera"
-						value=<%=(int) request.getAttribute("idTessera")%>>
-				</form>
+						name="username" value=<%=nome%>> 	<%
+					if(request.getAttribute("idTessera") != null){
+				%>
+					<input type="hidden" id="idTessera" name="idTessera"
+						value=<%=(int) request.getAttribute("idTessera")%>> <br>
+					<br>
+				</form><%}%>
 			</div>
 		</div>
 	</div>

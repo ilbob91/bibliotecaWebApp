@@ -136,7 +136,16 @@ public class GestioneDb {
 		}
 		return true;
 	}
+	public boolean checkPresenzaIdScontrino(int idScontrino) throws SQLException {
+		PreparedStatement state = connessione.prepareStatement("select * from acquisto where idScontrino = ? ;");
+		state.setInt(1, idScontrino);
+		ResultSet risultato = state.executeQuery();
+		while (risultato.next()) {
 
+			return false;
+		}
+		return true;
+	}
 	public List<Libro> stampaLibri() throws SQLException {
 		PreparedStatement state = connessione.prepareStatement("select * from libro;");
 		ResultSet risultato = state.executeQuery();
@@ -425,6 +434,32 @@ public class GestioneDb {
 
 		return data1.get(Calendar.DATE) + "/" + data1.get(Calendar.MONTH) + "/" + data1.get(Calendar.YEAR);
 
+	}
+
+	public void cancellaScontrinoVuoto(int idScontrino, String username) throws SQLException {
+		PreparedStatement state = connessione.prepareStatement("DELETE from scontrino where idScontrino = ? and username = ?;");
+		state.setInt(1, idScontrino);
+		state.setString(2, username);
+		state.execute();
+	}
+	public void cancellaAcquistoVuoto(int idScontrino, String username) throws SQLException {
+		PreparedStatement state = connessione.prepareStatement("DELETE from acquisto where idScontrino = ? and username = ?;");
+		state.setInt(1, idScontrino);
+		state.setString(2, username);
+		state.execute();
+	}
+
+	public void cancellaPrestitoVuoto(int idTessera, String username) throws SQLException {
+		PreparedStatement state = connessione.prepareStatement("DELETE from prestito where idTessera = ? and username = ?;");
+		state.setInt(1, idTessera);
+		state.setString(2, username);
+		state.execute();
+	}
+	public void cancellaTesseraVuoto(int idTessera, String username) throws SQLException {
+		PreparedStatement state = connessione.prepareStatement("DELETE from tessera where idTessera = ? and username = ?;");
+		state.setInt(1, idTessera);
+		state.setString(2, username);
+		state.execute();
 	}
 	
 }

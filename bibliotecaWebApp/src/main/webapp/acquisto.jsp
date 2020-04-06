@@ -22,6 +22,7 @@
 				<%
 					String nome = (String) request.getAttribute("username");
 				%>
+				
 				<%
 					List<Libro> lista = (List<Libro>) request.getAttribute("listaLibri");
 				%>
@@ -105,17 +106,24 @@
 					<input type="submit" class="btn btn-outline-danger"
 						style="width: 120px; height: 45px;" name="azione" value="Paga">
 					<input type="hidden" id="username" name="username" value=<%=nome%>>
+					<%
+					if(request.getAttribute("idScontrino") != null){
+				%>
 					<input type="hidden" id="idScontrino" name="idScontrino"
 						value=<%=(int) request.getAttribute("idScontrino")%>> <br>
 					<br>
-				</form>
-				<form action="tornaIndietro" method="post">
-					<input type="submit" class="btn btn-outline-secondary"
+				</form><%}%>
+				<form action="acquisto" method="post">
+					<input type="submit" class="btn btn-outline-secondary" name="azione"
 						value="Torna Indietro"> <input type="hidden" id="username"
-						name="username" value=<%=nome%>> <input type="hidden"
-						id="idScontrino" name="idScontrino"
-						value=<%=(int) request.getAttribute("idScontrino")%>>
-				</form>
+						name="username" value=<%=nome%>> <%
+					if(request.getAttribute("idScontrino") != null){
+				%>
+					<input type="hidden" id="idScontrino" name="idScontrino"
+						value=<%=(int) request.getAttribute("idScontrino")%>> <br>
+					<br>
+				</form><%}%>
+				
 			</div>
 		</div>
 	</div>

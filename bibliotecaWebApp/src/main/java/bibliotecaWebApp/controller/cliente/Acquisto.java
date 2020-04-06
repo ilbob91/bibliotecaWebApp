@@ -17,10 +17,8 @@ public class Acquisto extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String username = req.getParameter("username");
-		int idScontrino = Integer.parseInt(req.getParameter("idScontrino"));
 		String azione = req.getParameter("azione");
 		String titolo = req.getParameter("titolo");
-		int quantita = Integer.parseInt(req.getParameter("quantita"));
 
 		GestioneDb db;
 
@@ -29,23 +27,73 @@ public class Acquisto extends HttpServlet {
 			try {
 
 				db = new GestioneDb();
-				if (db.controlloQuantitaLibri(titolo, quantita, db.stampaLibri())) {
-					db.inserimentoTabellaAcquisto(titolo, quantita, username, idScontrino);
-					db.updateQuantitaLibri(titolo, quantita);
+				if (!req.getParameter("quantita").equals("") && req.getParameter("quantita") != null) {
+					String parameter = req.getParameter("quantita");
+					int quantita = Integer.parseInt(parameter);
+					if (req.getParameter("idScontrino") == null) {
+						// crea lo scontrino quando non c'è e aggiungi un prodotto al carrello
+						int idNuovo = db.creaScontrino(username);
+						if (db.controlloQuantitaLibri(titolo, quantita, db.stampaLibri())) {
+							db.inserimentoTabellaAcquisto(titolo, quantita, username, idNuovo);
+							db.updateQuantitaLibri(titolo, quantita);
 
-					req.setAttribute("idScontrino", idScontrino);
-					req.setAttribute("username", username);
-					req.setAttribute("listaLibri", db.stampaLibri());
-					req.setAttribute("mess", "Libro aggiunto con successo");
+							req.setAttribute("idScontrino", idNuovo);
+							req.setAttribute("username", username);
+							req.setAttribute("listaLibri", db.stampaLibri());
+							req.setAttribute("mess", "Libro aggiunto con successo");
+						} else {
+							// non ci sono sufficienti libri
+							req.setAttribute("idScontrino", idNuovo);
+							req.setAttribute("username", username);
+							req.setAttribute("listaLibri", db.stampaLibri());
+							req.setAttribute("mess", "Quantità libri non disponibile");
+						}
+						db.close();
+						req.getRequestDispatcher("acquisto.jsp").forward(req, resp);
+					} else {
+						// quando lo scontrino già esiste e aggiungi un prodotto
+						String idSc = req.getParameter("idScontrino");
+						int idScontrino = Integer.parseInt(idSc);
+						if (db.controlloQuantitaLibri(titolo, quantita, db.stampaLibri())) {
+							db.inserimentoTabellaAcquisto(titolo, quantita, username, idScontrino);
+							db.updateQuantitaLibri(titolo, quantita);
+
+							req.setAttribute("idScontrino", idScontrino);
+							req.setAttribute("username", username);
+							req.setAttribute("listaLibri", db.stampaLibri());
+							req.setAttribute("mess", "Libro aggiunto con successo");
+						} else {
+							// scontrino già esiste e non c'è quantità sufficiente
+							req.setAttribute("idScontrino", idScontrino);
+							req.setAttribute("username", username);
+							req.setAttribute("listaLibri", db.stampaLibri());
+							req.setAttribute("mess", "Quantità libri non disponibile");
+						}
+						db.close();
+						req.getRequestDispatcher("acquisto.jsp").forward(req, resp);
+
+					}
 				} else {
-					req.setAttribute("idScontrino", idScontrino);
-					req.setAttribute("username", username);
-					req.setAttribute("listaLibri", db.stampaLibri());
-					req.setAttribute("mess", "Quantità libri non disponibile");
-				}
-				db.close();
-				req.getRequestDispatcher("acquisto.jsp").forward(req, resp);
+					// quando non esiste lo scontrino e premi aggiungi senza scrivere nulla
+					if (req.getParameter("idScontrino") == null) {
+						req.setAttribute("username", username);
+						req.setAttribute("listaLibri", db.stampaLibri());
+						req.setAttribute("mess", "Non puoi aggiungere 0 prodotti!");
+						db.close();
+						req.getRequestDispatcher("acquisto.jsp").forward(req, resp);
+					} else {
+						// lo scontrino esiste e premi aggiungi senza scrivere nulla
+						String idSc = req.getParameter("idScontrino");
+						int idScontrino = Integer.parseInt(idSc);
+						req.setAttribute("idScontrino", idScontrino);
+						req.setAttribute("username", username);
+						req.setAttribute("listaLibri", db.stampaLibri());
+						req.setAttribute("mess", "Non puoi aggiungere 0 prodotti!");
+						db.close();
+						req.getRequestDispatcher("acquisto.jsp").forward(req, resp);
 
+					}
+				}
 			} catch (ClassNotFoundException | IOException | SQLException e) {
 
 				e.printStackTrace();
@@ -53,28 +101,85 @@ public class Acquisto extends HttpServlet {
 		} else if (azione.equalsIgnoreCase("Paga")) {
 			try {
 				db = new GestioneDb();
-				if (req.getParameter("titolo") != null && !req.getParameter("titolo").equals("")) {
-					if (db.controlloQuantitaLibri(titolo, quantita, db.stampaLibri())) {
-						db.inserimentoTabellaAcquisto(titolo, quantita, username, idScontrino);
-						db.updateQuantitaLibri(titolo, quantita);
 
-						req.setAttribute("idScontrino", idScontrino);
-						req.setAttribute("username", username);
-						req.setAttribute("listaLibri", db.stampaLibri());
-						req.setAttribute("mess", "Libro aggiunto con successo");
-						double spesa = db.getPrezzo(idScontrino);
-						db.totaleScontrino(idScontrino, spesa);
+				if (req.getParameter("quantita") != null && !req.getParameter("quantita").equals("")) {
+					String parameter = req.getParameter("quantita");
+					int quantita = Integer.parseInt(parameter);
+					if (req.getParameter("idScontrino") == null) {
+						// crea lo scontrino quando non c'è e aggiungi un prodotto al carrello e pagare
+						int idNuovo = db.creaScontrino(username);
+						if (db.controlloQuantitaLibri(titolo, quantita, db.stampaLibri())) {
+							db.inserimentoTabellaAcquisto(titolo, quantita, username, idNuovo);
+							db.updateQuantitaLibri(titolo, quantita);
+
+							req.setAttribute("idScontrino", idNuovo);
+							req.setAttribute("username", username);
+							req.setAttribute("listaLibri", db.stampaLibri());
+							req.setAttribute("mess", "Libro aggiunto con successo e pagamento effettuato");
+							double spesa = db.getPrezzo(idNuovo);
+							db.totaleScontrino(idNuovo, spesa);
+							db.close();
+							req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
+						} else {
+							// non ci sono sufficienti libri
+							req.setAttribute("idScontrino", idNuovo);
+							req.setAttribute("username", username);
+							req.setAttribute("listaLibri", db.stampaLibri());
+							req.setAttribute("mess", "Quantità libri non disponibile");
+							db.close();
+							req.getRequestDispatcher("acquisto.jsp").forward(req, resp);
+						}
 
 					} else {
+						// scontrino già esiste e paghi direttamente un prodotto insieme anche ai
+						// precedenti
+						String idSc = req.getParameter("idScontrino");
+						int idScontrino = Integer.parseInt(idSc);
+						if (db.controlloQuantitaLibri(titolo, quantita, db.stampaLibri())) {
+							db.inserimentoTabellaAcquisto(titolo, quantita, username, idScontrino);
+							db.updateQuantitaLibri(titolo, quantita);
+
+							req.setAttribute("idScontrino", idScontrino);
+							req.setAttribute("username", username);
+							req.setAttribute("listaLibri", db.stampaLibri());
+							req.setAttribute("mess", "Libro aggiunto con successo");
+							double spesa = db.getPrezzo(idScontrino);
+							db.totaleScontrino(idScontrino, spesa);
+							db.close();
+							req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
+						} else {
+							// scontrino già esiste e non c'è sufficiente quantità
+							req.setAttribute("idScontrino", idScontrino);
+							req.setAttribute("username", username);
+							req.setAttribute("listaLibri", db.stampaLibri());
+							req.setAttribute("mess", "Quantità libri non disponibile");
+							db.close();
+							req.getRequestDispatcher("acquisto.jsp").forward(req, resp);
+						}
+					}
+				} else {
+					// quando non esiste lo scontrino e premi paga senza scrivere nulla
+					if (req.getParameter("idScontrino") == null) {
+						req.setAttribute("username", username);
+						req.setAttribute("listaLibri", db.stampaLibri());
+						req.setAttribute("mess", "Non puoi pagare 0 prodotti!");
+						db.close();
+						req.getRequestDispatcher("acquisto.jsp").forward(req, resp);
+					} else {
+						// quando non scrivi nulla, lo scontrino già esiste ma Paghi lo stesso tutto
+						// quello che c'è nel carrello
+						String idSc = req.getParameter("idScontrino");
+						int idScontrino = Integer.parseInt(idSc);
 						req.setAttribute("idScontrino", idScontrino);
 						req.setAttribute("username", username);
 						req.setAttribute("listaLibri", db.stampaLibri());
-						req.setAttribute("mess", "Quantità libri non disponibile");
+						req.setAttribute("mess", "Pagamento effettuato con successo");
+						double spesa = db.getPrezzo(idScontrino);
+						db.totaleScontrino(idScontrino, spesa);
+						db.close();
+						req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
 					}
 				}
-				double spesa = db.getPrezzo(idScontrino);
-				db.totaleScontrino(idScontrino, spesa);
-				db.close();
 
 			} catch (SQLException e) {
 
@@ -83,8 +188,29 @@ public class Acquisto extends HttpServlet {
 
 				e.printStackTrace();
 			}
-			req.setAttribute("username", username);
-			req.setAttribute("idScontrino", idScontrino);
+		} else if (azione.equalsIgnoreCase("Torna Indietro")) {
+			try {
+
+				if (req.getParameter("idScontrino") == null) {
+					req.setAttribute("username", username);
+					req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
+				} else {
+					String idSc = req.getParameter("idScontrino");
+					int idScontrino = Integer.parseInt(idSc);
+					req.setAttribute("idScontrino", idScontrino);
+					req.setAttribute("username", username);
+					db = new GestioneDb();
+					db.cancellaScontrinoVuoto(idScontrino, username);
+					db.cancellaAcquistoVuoto(idScontrino, username);
+					db.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
 		}
 	}

@@ -24,16 +24,16 @@ public class GestioneCliente extends HttpServlet {
 			String azione = req.getParameter("action");
 			db = new GestioneDb();
 			if (azione.equalsIgnoreCase("Compra libri")) {
-				int idScontrino = db.creaScontrino(username);
+				//int idScontrino = db.creaScontrino(username);
 				req.setAttribute("listaLibri", db.stampaLibri());
-				req.setAttribute("idScontrino", idScontrino);
+				//req.setAttribute("idScontrino", idScontrino);
 				req.setAttribute("username", username);
 				db.close();
 				req.getRequestDispatcher("acquisto.jsp").forward(req, resp);
 			} else if (azione.equalsIgnoreCase("Affitta libri")) {
 				req.setAttribute("username", username);
-				int idTessera = db.creaTessera(username);
-				req.setAttribute("idTessera", idTessera);
+				//int idTessera = db.creaTessera(username);
+				//req.setAttribute("idTessera", idTessera);
 				req.setAttribute("listaLibri", db.stampaLibri());
 				db.close();
 				req.getRequestDispatcher("affitto.jsp").forward(req, resp);
