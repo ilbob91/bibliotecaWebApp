@@ -14,7 +14,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <span class="navbar-brand mb-0 h1"> <img src="download.png" width="30" height="30" class="d-inline-block align-top" alt="">
-  Libreria Bob e Fabio</span>
+  Libreria Gruppo 3</span>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -30,7 +30,7 @@
     </ul>
   </div>
 </nav>
-<p class="text-lg-center">Libreria di Fabio e Bob since 2020</p>
+<p class="text-lg-center">Libreria di Fabio e Bob since 2020. Dal 2020 inoltre si sono aggiunte Marta e Betta, contribuendo all'affito del server gratuito.</p>
 <form action="login.jsp">
 					<input type="submit" class="btn btn-outline-secondary btn-block"
 						style="width: 200px; height: 45px; margin: auto"
