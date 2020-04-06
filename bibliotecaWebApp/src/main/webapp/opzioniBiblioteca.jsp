@@ -23,45 +23,45 @@
 			</div>
 		</div>
 	</div>
-				<%
-					String messaggio = (String) request.getAttribute("messaggio");
-					if (messaggio != null) {
-				%>
+	<%
+		String messaggio = (String) request.getAttribute("messaggio");
+		if (messaggio != null) {
+	%>
 
-				<p class="text-md-center text-danger"><%=messaggio%></p>
+	<p class="text-md-center text-danger"><%=messaggio%></p>
 
-				<%
-					}
-				%>
-				<br> <br> <br>
-				<form action="gestioneBiblioteca" method="post">
-					<input type="submit" class="btn btn-outline-primary btn-block"
-						style="width: 300px; height: 60px; margin: auto" name="azione"
-						value="Aggiungi un libro"> <br> <input type="submit"
-						class="btn btn-outline-primary btn-block"
-						style="width: 300px; height: 60px; margin: auto" name="azione"
-						value="Riordina libro"> <br> <input type="submit"
-						class="btn btn-outline-primary btn-block"
-						style="width: 300px; height: 60px; margin: auto" name="azione"
-						value="Invia mail"> <br> <input type="submit"
-						class="btn btn-outline-primary btn-block"
-						style="width: 300px; height: 60px; margin: auto" name="azione"
-						value="Stampa lista libri"> <br> <input type="submit"
-						class="btn btn-outline-primary btn-block"
-						style="width: 300px; height: 60px; margin: auto" name="azione"
-						value="Stampa lista libri venduti"> <br> <input
-						type="submit" class="btn btn-outline-primary btn-block"
-						style="width: 300px; height: 60px; margin: auto" name="azione"
-						value="Stampa lista libri prestati">
-				</form>
-				<br> <br>
+	<%
+		}
+	%>
+	<br>
+	<br>
+	<br>
+	<form action="gestioneBiblioteca" method="post">
+		<input type="submit" class="btn btn-outline-primary btn-block"
+			style="width: 300px; height: 60px; margin: auto" name="azione"
+			value="Aggiungi un libro"> <br> <input type="submit"
+			class="btn btn-outline-primary btn-block"
+			style="width: 300px; height: 60px; margin: auto" name="azione"
+			value="Riordina libro"> <br> <input type="submit"
+			class="btn btn-outline-primary btn-block"
+			style="width: 300px; height: 60px; margin: auto" name="azione"
+			value="Stampa lista libri"> <br> <input type="submit"
+			class="btn btn-outline-primary btn-block"
+			style="width: 300px; height: 60px; margin: auto" name="azione"
+			value="Stampa lista libri venduti"> <br> <input
+			type="submit" class="btn btn-outline-primary btn-block"
+			style="width: 300px; height: 60px; margin: auto" name="azione"
+			value="Stampa lista libri prestati">
+	</form>
+	<br>
+	<br>
 
-				<form action="login.jsp">
-					<input type="submit" class="btn btn-outline-secondary btn-block"
-						style="width: 200px; height: 45px; margin: auto"
-						value="Torna Indietro">
-				</form>
-			
-		
+	<form action="login.jsp">
+		<input type="submit" class="btn btn-outline-secondary btn-block"
+			style="width: 200px; height: 45px; margin: auto"
+			value="Torna Indietro">
+	</form>
+
+
 </body>
 </html>

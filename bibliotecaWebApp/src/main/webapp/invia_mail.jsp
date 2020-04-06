@@ -1,18 +1,23 @@
 <%@page import="bibliotecaWebApp.model.Prestito"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
 <head>
 <meta charset="ISO-8859-1">
 <title>Invio mail</title>
 </head>
 <body>
-<%@include file="navbar.jsp" %>
-<% List<Prestito> listaPrestiti = (List<Prestito>)request.getAttribute("listaLibriPrestati"); %>
+	<%@include file="navbar.jsp"%>
+	<%
+		List<Prestito> listaPrestiti = (List<Prestito>) request.getAttribute("listaLibriPrestati");
+	%>
 	<div class="container">
 		<div class="row">
 			<div class="col-xl align-self-center ">
@@ -25,17 +30,22 @@
 						<th>Username</th>
 
 					</tr>
-					<% for(Prestito p : listaPrestiti) { %>
+					<%
+						for (Prestito p : listaPrestiti) {
+					%>
 
 					<tr>
 						
-						<td><%=p.getTitolo() %></td>
-						<td><%=p.getDataAffitto() %></td>
+						<td><%=p.getTitolo()%></td>
+						<td><%=p.getDataAffitto()%></td>
 						<td><%=p.getUsername()%></td>
 					</tr>
-					<% } %>
-
+					<%
+						}
+					%>
+				
 				</table>
+				
 				<br>
 			</div>
 			<div class="col-xl align-self-center ">

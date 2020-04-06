@@ -54,9 +54,10 @@
 			<td><%=p.getUsername()%></td>
 			<td>
 				<form action="auto" method="post">
-					<input type="submit" name="azione" value="Sollecita"> <input
+					<input type="submit" class="btn btn-secondary" name="azione" value="Sollecita"> <input
 						type="hidden" id="Utente" name="Utente" value=<%=p.getUsername()%>>
 						<input type="hidden" id="data" name="data" value=<%=p.getDataAffitto()%>>
+						<input type="hidden" id="titolo" name="titolo" value=<%=p.getTitolo()%>>
 				</form>
 			</td>
 		</tr>
