@@ -12,6 +12,7 @@
 
 </head>
 <body>
+
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
   <span class="navbar-brand mb-0 h1"><img src="download.png" width="30" height="30" class="d-inline-block align-top" alt="">
   Libreria Bob e Fabio</span>
@@ -21,8 +22,11 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="http://localhost:8080/bibliotecaWebApp/">Home </a>
+     <li class="nav-item">
+     <form action="opzioniCliente" method="post" class="form-inline my-2 my-lg-0">
+      <input type="hidden" id="username" name="username" value=<%=request.getAttribute("username")%>>
+      <button class="btn btn-outline-link my-2 my-sm-0" type="submit" name="action" value="Home">Home</button>
+    </form>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="http://localhost:8080/bibliotecaWebApp/about.jsp">About</a>
@@ -32,6 +36,7 @@
       
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">LogOut</button>
     </form>
+    
   </div>
 </nav>
 </body>

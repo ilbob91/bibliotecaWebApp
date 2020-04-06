@@ -63,6 +63,10 @@ public class GestioneCliente extends HttpServlet {
 				req.setAttribute("listaLibriTessera", db.stampaLibriInPrestito(idTessera));
 				db.close();
 				req.getRequestDispatcher("listaLibriTessera.jsp").forward(req, resp);
+			}else if (azione.equalsIgnoreCase("Home")) {
+				req.setAttribute("username", username);
+				db.close();
+				req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
 			}
 
 		} catch (ClassNotFoundException | IOException | SQLException e) {

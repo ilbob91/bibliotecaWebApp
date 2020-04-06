@@ -13,7 +13,7 @@
 <%@include file="navbarCliente.jsp"%>
 <br>
 <%String nome = (String) request.getAttribute("username"); %>
-<h2><p class="text-xl-center">Fai una scelta, <%=request.getAttribute("username")%></p></h2><br><br>
+<h2><p class="text-xl-center">Fai una scelta, <%=nome%></p></h2><br><br>
 <% String mess = (String) request.getAttribute("mess"); 
 	if (mess != null ){
 		%>
