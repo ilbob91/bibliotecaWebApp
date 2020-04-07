@@ -25,14 +25,14 @@
      <li class="nav-item">
      <form action="opzioniCliente" method="post" class="form-inline my-2 my-lg-0">
       <input type="hidden" id="username" name="username" value=<%=request.getAttribute("username")%>>
-      <button class="btn btn-outline-link my-2 my-sm-0" type="submit" name="action" value="Home">Home</button>
+      <button class="btn btn-outline-link my-2 my-sm-0" type="submit" name="action" value="Home">Opzioni</button>
     </form>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="http://localhost:8080/bibliotecaWebApp/about.jsp">About</a>
       </li>
     </ul>
-     <form action="login.jsp" class="form-inline my-2 my-lg-0">
+     <form action="home.jsp" class="form-inline my-2 my-lg-0">
       
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">LogOut</button>
     </form>

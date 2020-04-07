@@ -23,18 +23,19 @@ public class Login extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		GestioneDb gest;
-
-		try {
-			gest = new GestioneDb();
-			String user = req.getParameter("username");
+            String user = req.getParameter("username");
 			String pass = req.getParameter("password");
+			
+		
+			try {
+				gest = new GestioneDb();
+			
+			
 			Utente ut = gest.getUtente(user, pass);
 
-			String azione = req.getParameter("azione");
+			
 
-			if ("Entra".equalsIgnoreCase(azione))
-
-				if (user.equals(getInitParameter("username")) && pass.equals(getInitParameter("password"))) {
+		        if (user.equals(getInitParameter("username")) && pass.equals(getInitParameter("password"))) {
 					req.getRequestDispatcher("opzioniBiblioteca.jsp").forward(req, resp);
 
 				} else if (!gest.controlloUtente(user, pass)) {
@@ -52,10 +53,9 @@ public class Login extends HttpServlet {
 						req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
 					}
 				}
-
-			else if ("Registrati".equalsIgnoreCase(azione)) {
-
-				if (gest.checkEmail(user) && !user.equals(getInitParameter("username"))) {
+		
+			
+			/*	if (gest.checkEmail(user) && !user.equals(getInitParameter("username"))) {
 					gest.insertUtente(user, pass);
 					EmailUtility.sendEmail(user, "Conferma Mail", generaLinkValidazioneUtente(user));
 					gest.close();
@@ -72,20 +72,15 @@ public class Login extends HttpServlet {
 						req.getRequestDispatcher("login.jsp").forward(req, resp);
 					}
 
-				}
-			}
-
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (AddressException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+				}*/
+	} catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}}
+	
 
 	private String generaLinkValidazioneUtente(String utente) {
 		String validationPath = "http://localhost:8080/bibliotecaWebApp/validazione?utente=";

@@ -1,6 +1,9 @@
 package bibliotecaWebApp.repository;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 
 import java.sql.DriverManager;
@@ -9,11 +12,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+
+import javax.servlet.http.Part;
+
 import bibliotecaWebApp.model.Acquisto;
 import bibliotecaWebApp.model.Libro;
 import bibliotecaWebApp.model.LibroVenduto;
@@ -63,16 +70,7 @@ public class GestioneDb {
 
 	}
 
-	public Utente insertUtente(String user, String pass) throws SQLException {
-		PreparedStatement statement = connessione
-				.prepareStatement("insert into utente (username, password, active) values (?,?,?);");
-		statement.setString(1, user);
-		statement.setString(2, pass);
-		statement.setBoolean(3, false);
-		statement.execute();
-		Utente u = new Utente(user, pass, false);
-		return u;
-	}
+	
 
 	public int creaScontrino(String username) throws SQLException {
 
@@ -100,19 +98,28 @@ public class GestioneDb {
 		return false;
 	}
 
-	public Utente getUtente(String username, String password) throws SQLException {
+	public Utente getUtente(String username, String password) throws SQLException, IOException {
 		PreparedStatement statement = connessione
 				.prepareStatement("select * from utente where username = ? and password = ?");
 		statement.setString(1, username);
 		statement.setString(2, password);
 		ResultSet executeQuery = statement.executeQuery();
 		while (executeQuery.next()) {
-
 			String u = executeQuery.getString("username");
 			String p = executeQuery.getString("password");
 			boolean ac = executeQuery.getBoolean("active");
+			Blob blob = executeQuery.getBlob("immagine");
+			InputStream inputStream = blob.getBinaryStream();
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			byte[] buffer = new byte[4096];
+			int bytesRead = -1;
+			while ((bytesRead = inputStream.read(buffer)) != -1) {
+				outputStream.write(buffer, 0, bytesRead);
+			}
+			byte[] imageBytes = outputStream.toByteArray();
+			String base64Image = Base64.getEncoder().encodeToString(imageBytes);
 
-			return new Utente(u, p, ac);
+			return new Utente(u, p, ac, base64Image);
 
 		}
 		return null;
@@ -461,5 +468,71 @@ public class GestioneDb {
 		state.setString(2, username);
 		state.execute();
 	}
+
+	public Utente salvaUtente(String username, String password, InputStream inputStream) throws SQLException {
+		PreparedStatement prepareStatement = this.connessione
+				.prepareStatement("INSERT INTO utente (username, password, active, immagine) VALUES (?, ?, ?, ?);");
+		prepareStatement.setString(1, username);
+		prepareStatement.setString(2, password);
+		prepareStatement.setBoolean(3, false);
+		prepareStatement.setBlob(4, inputStream);
+		prepareStatement.execute();
+
+		return new Utente(username, password, false, null);	
+	}
+	public Utente prendiImmagine(String username) throws SQLException, IOException {
+
+        PreparedStatement statement = connessione.prepareStatement("select immagine from utente where username = ?");
+        statement.setString(1, username);
+        ResultSet executeQuery = statement.executeQuery();
+        while (executeQuery.next()) {
+            Blob blob = executeQuery.getBlob("immagine");
+            InputStream inputStream = blob.getBinaryStream();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[4096];
+            int bytesRead = -1;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            byte[] imageBytes = outputStream.toByteArray();
+            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+            return new Utente(username, base64Image);
+        }
+        return null;
+
+    }
+
+	public Utente modificaImmagine(InputStream p, String user) throws SQLException {
+		PreparedStatement prepareStatement = this.connessione
+				.prepareStatement("update utente set immagine = ? where username = ?;");
+		prepareStatement.setBlob(1, p);
+		prepareStatement.setString(2, user);
+		prepareStatement.execute();
+		
+		return new Utente(user, null);
+		
+	}public void creaImmagine(String username) throws SQLException, IOException {
+
+        PreparedStatement statement = connessione.prepareStatement("select immagine from utente where username = ?");
+        statement.setString(1, username);
+        ResultSet executeQuery = statement.executeQuery();
+        while (executeQuery.next()) {
+            Blob blob = executeQuery.getBlob("immagine");
+            InputStream inputStream = blob.getBinaryStream();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[4096];
+            int bytesRead = -1;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            byte[] imageBytes = outputStream.toByteArray();
+            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+        
+        }
+       
+    }
+	
 	
 }

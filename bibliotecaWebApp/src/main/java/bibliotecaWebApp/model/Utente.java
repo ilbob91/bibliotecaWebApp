@@ -7,11 +7,27 @@ public class Utente {
 	private String password;
 	
 	private boolean active;
+	
+	private String immagine;
 
-	public Utente(String username, String password, boolean active) {
+	public Utente(String username, String password, boolean active, String immagine) {
 		this.username = username;
 		this.password = password;
 		this.active = active;
+		this.immagine= immagine;
+	}
+	public Utente(String username, String immagine) {
+		this.username = username;
+		this.immagine= immagine;
+	}
+
+	
+	public String getImmagine() {
+		return immagine;
+	}
+
+	public void setImmagine(String immagine) {
+		this.immagine = immagine;
 	}
 
 	public boolean isActive() {

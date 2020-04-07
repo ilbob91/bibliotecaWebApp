@@ -10,7 +10,7 @@
 <head>
 
 <meta charset="ISO-8859-1">
-<title>Entra</title>
+<title>Home</title>
 </head>
 <body>
 
@@ -23,9 +23,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-    <li class="nav-item"><a class="nav-link"
-					href="http://localhost:8080/bibliotecaWebApp/">Home</a></li>
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="http://localhost:8080/bibliotecaWebApp/registrazione.jsp">Registrati! <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
@@ -47,29 +45,23 @@
 	%>
 	<br>
 	<h2>
-		<p class="text-xl-center">Fai il login!</p>
+		<p class="text-xl-center">Fai il login o accedi alla registrazione!</p>
 	</h2>
 	<br>
 	<br>
-	<form action="login" method="post">
-		<div class="cliente">
-
-			<p class="text-xl-center">Mail</p>
-			<input type="text" class="form-control" id="username" name="username"
-				style="width: 250px; height: 50px; margin: auto" placeholder="Mail">
-		</div>
-		<br>
-		<div class="cliente">
-			<p class="text-xl-center">Password</p>
-			<input type="password" class="form-control" id="password"
-				name="password" style="width: 250px; height: 50px; margin: auto"
-				placeholder="Password">
-		</div>
+	<form action="login.jsp" method="post">
+		
 		<br> <input type="submit"
 			class="btn btn-outline-primary btn-block"
 			style="width: 150px; height: 45px; margin: auto" name="azione"
-			value="Login"> 
+			value="Login"> <br> 
 	</form>
+	<form action="registrazione.jsp" method="post">
+	<input type="submit"
+			class="btn btn-outline-primary btn-block"
+			style="width: 150px; height: 45px; margin: auto" name="azione"
+			value="Registrati">
+			</form>
 	<br>
 	<br>
 

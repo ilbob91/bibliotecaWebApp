@@ -67,6 +67,11 @@ public class GestioneCliente extends HttpServlet {
 				req.setAttribute("username", username);
 				db.close();
 				req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
+			}else if (azione.equalsIgnoreCase("Visualizza immagine")) {
+				req.setAttribute("utente", db.prendiImmagine(username));
+				req.setAttribute("username", username);
+				db.close();
+				req.getRequestDispatcher("profilo.jsp").forward(req, resp);
 			}
 
 		} catch (ClassNotFoundException | IOException | SQLException e) {
