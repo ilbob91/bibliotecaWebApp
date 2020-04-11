@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import bibliotecaWebApp.repository.GestioneDb;
 import bibliotecaWebApp.service.EmailUtility;
 
-@WebServlet(urlPatterns = "/auto")
+@WebServlet(urlPatterns = "/admin/auto")
 public class InvioMailAutomatica extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,7 +36,7 @@ public class InvioMailAutomatica extends HttpServlet {
 			risultatoMessaggio = "C'è stato un errore nell'invio della mail: " + ex.getMessage();
 		} finally {
 			req.setAttribute("messaggio", risultatoMessaggio);
-			req.getRequestDispatcher("messaggio.jsp").forward(req, resp);
+			req.getRequestDispatcher("/messaggio.jsp").forward(req, resp);
 		}
 	}
 

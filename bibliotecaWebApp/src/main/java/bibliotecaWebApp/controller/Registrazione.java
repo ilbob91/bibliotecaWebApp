@@ -37,7 +37,7 @@ public class Registrazione extends HttpServlet {
 		try {
 			gest = new GestioneDb();
 
-			if (gest.checkEmail(username) && !username.equals(getInitParameter("username"))) {
+			if (gest.checkEmail(username) && !username.equals("admin")) {
 				Utente utente = gest.salvaUtente(username, password, imagePart.getInputStream());
 				EmailUtility.sendEmail(utente.getUsername(), "Conferma Mail", generaLinkValidazioneUtente(utente));
 				gest.close();

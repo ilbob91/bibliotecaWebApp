@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import bibliotecaWebApp.model.Libro;
 import bibliotecaWebApp.repository.GestioneDb;
 
-@WebServlet(name = "riordina", urlPatterns = "/riordina")
+@WebServlet(name = "riordina", urlPatterns = "/admin/riordina")
 public class Riordina extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,6 +21,8 @@ public class Riordina extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String azione = req.getParameter("azione");
+		if("riordina".equalsIgnoreCase(azione)) {
 		String titolo = req.getParameter("titolo");
 		int quantita = Integer.parseInt(req.getParameter("quantita"));
 		try {
@@ -35,6 +37,9 @@ public class Riordina extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		req.getRequestDispatcher("riordina.jsp").forward(req, resp);
-	}
+		req.getRequestDispatcher("/riordina.jsp").forward(req, resp);
+	} else if ("Torna Indietro".equalsIgnoreCase(azione)){
+		req.getRequestDispatcher("/opzioniBiblioteca.jsp").forward(req, resp);
+}
+}
 }

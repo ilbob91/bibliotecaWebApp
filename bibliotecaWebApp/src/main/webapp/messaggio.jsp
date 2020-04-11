@@ -22,7 +22,7 @@
 		}
 	%>
 	<br>
-		<form action="opzioniBiblioteca.jsp">
+		<form action="indietro" method="post">
 					<input type="submit" class="btn btn-outline-secondary"
 						value="Torna Indietro">
 				</form>

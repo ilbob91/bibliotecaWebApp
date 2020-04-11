@@ -113,7 +113,7 @@
 						value=<%=(int) request.getAttribute("idTessera")%>> <br>
 					<br>
 				</form><%}%>
-				<form action="cliente/affitto" method="post">
+				<form action="affitto" method="post">
 					<input type="submit" class="btn btn-outline-secondary" name= "azione"
 						value="Torna Indietro">  	<%
 					if(request.getAttribute("idTessera") != null){

@@ -36,7 +36,9 @@ public class Login extends HttpServlet {
 
 			
 
-		        if (user.equals(getInitParameter("username")) && pass.equals(getInitParameter("password"))) {
+		        if (ut.getTipo().equalsIgnoreCase("admin")) {
+		        	session.setAttribute("username", ut.getUsername());
+		        	session.setAttribute("tipo", ut.getTipo());
 					req.getRequestDispatcher("opzioniBiblioteca.jsp").forward(req, resp);
 
 				} else if (!gest.controlloUtente(user, pass)) {
@@ -49,6 +51,7 @@ public class Login extends HttpServlet {
 						gest.close();
 						req.getRequestDispatcher("login.jsp").forward(req, resp);
 					} else {
+						session.setAttribute("tipo", ut.getTipo());
 						session.setAttribute("username", ut.getUsername());
 						gest.close();
 						req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);

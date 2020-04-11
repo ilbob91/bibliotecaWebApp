@@ -10,6 +10,18 @@ public class Utente {
 	
 	private String immagine;
 
+	private String tipo;
+	
+	
+	
+	public Utente(String username, String password, boolean active, String immagine, String tipo) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.active = active;
+		this.immagine = immagine;
+		this.tipo = tipo;
+	}
 	public Utente(String username, String password, boolean active, String immagine) {
 		this.username = username;
 		this.password = password;
@@ -22,6 +34,12 @@ public class Utente {
 	}
 
 	
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 	public String getImmagine() {
 		return immagine;
 	}

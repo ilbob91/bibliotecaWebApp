@@ -111,7 +111,7 @@
 						value=<%=(int) request.getAttribute("idScontrino")%>> <br>
 					<br>
 				</form><%}%>
-				<form action="cliente/acquisto" method="post">
+				<form action="acquisto" method="post">
 					<input type="submit" class="btn btn-outline-secondary" name="azione"
 						value="Torna Indietro">  <%
 					if(request.getAttribute("idScontrino") != null){

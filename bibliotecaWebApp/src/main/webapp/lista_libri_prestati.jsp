@@ -67,7 +67,7 @@
 
 	</table>
 	<br>
-	<form action="opzioniBiblioteca.jsp">
+	<form action="indietro" method="post">
 		<input type="submit" class="btn btn-outline-secondary btn-block"
 			style="width: 150px; height: 50px; margin: auto"
 			value="Torna Indietro">

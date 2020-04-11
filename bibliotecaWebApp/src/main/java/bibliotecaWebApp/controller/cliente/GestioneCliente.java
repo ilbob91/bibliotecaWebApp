@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import bibliotecaWebApp.repository.GestioneDb;
 
-@WebServlet(name = "opzioniCliente", urlPatterns = { "/cliente/opzioniCliente, /opzioniCliente" })
+@WebServlet(name = "opzioniCliente", urlPatterns = { "/cliente/opzioniCliente" , "/opzioniCliente"})
 public class GestioneCliente extends HttpServlet {
 
 	@Override

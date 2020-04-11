@@ -1,4 +1,4 @@
-package bibliotecaWebApp.controller.cliente;
+package bibliotecaWebApp.controller;
 
 import java.io.IOException;
 
@@ -8,17 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-@WebServlet(name = "tornaIndietro", urlPatterns = { "/cliente/tornaIndietro" })
-public class TornaIndietro extends HttpServlet {
-	@Override
+@WebServlet(name = "indietro", urlPatterns = { "/admin/indietro" })
+public class TornaIndietroAdmin extends HttpServlet{
+@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		
-		HttpSession session = req.getSession();
-		session.getAttribute("username");
-		
-		resp.sendRedirect(req.getContextPath() + "/opzioniCliente.jsp");
+	
+		resp.sendRedirect(req.getContextPath() + "/opzioniBiblioteca.jsp");
 		
 	}
 	

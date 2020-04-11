@@ -36,7 +36,8 @@
 	<br>
 	<br>
 	<br>
-	<form action="gestioneBiblioteca" method="post">
+	 <% String path = request.getContextPath(); %>
+	<form action="<%=path %>/admin/gestioneBiblioteca" method="post">
 		<input type="submit" class="btn btn-outline-primary btn-block"
 			style="width: 300px; height: 60px; margin: auto" name="azione"
 			value="Aggiungi un libro"> <br> <input type="submit"
@@ -52,14 +53,10 @@
 			type="submit" class="btn btn-outline-primary btn-block"
 			style="width: 300px; height: 60px; margin: auto" name="azione"
 			value="Stampa lista libri prestati">
-	</form>
-	<br>
-	<br>
-
-	<form action="login.jsp">
+	<br><br>
 		<input type="submit" class="btn btn-outline-secondary btn-block"
-			style="width: 200px; height: 45px; margin: auto"
-			value="Torna Indietro">
+			style="width: 200px; height: 45px; margin: auto" name  ="azione"
+			value="Logout">
 	</form>
 
 

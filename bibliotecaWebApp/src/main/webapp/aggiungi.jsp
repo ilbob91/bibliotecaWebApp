@@ -83,13 +83,13 @@
 						<br>
 					</div>
 					<input type="submit" class="btn btn-outline-success"
-						style="width: 120px; height: 45px;" value="Aggiungi">
+						style="width: 120px; height: 45px;" name="action" value="Aggiungi">
 				</form>
 				<br>
 				<br>
-				<form action="opzioniBiblioteca.jsp">
+				<form action="aggiungi" method ="post">
 					<input type="submit" class="btn btn-outline-secondary"
-						value="Torna Indietro">
+						name ="action"value="Torna Indietro">
 				</form>
 			</div>
 		</div>

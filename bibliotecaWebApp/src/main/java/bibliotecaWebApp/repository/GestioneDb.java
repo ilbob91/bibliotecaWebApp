@@ -108,6 +108,7 @@ public class GestioneDb {
 			String u = executeQuery.getString("username");
 			String p = executeQuery.getString("password");
 			boolean ac = executeQuery.getBoolean("active");
+			String tipo = executeQuery.getString("tipo");
 			Blob blob = executeQuery.getBlob("immagine");
 			InputStream inputStream = blob.getBinaryStream();
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -119,7 +120,7 @@ public class GestioneDb {
 			byte[] imageBytes = outputStream.toByteArray();
 			String base64Image = Base64.getEncoder().encodeToString(imageBytes);
 
-			return new Utente(u, p, ac, base64Image);
+			return new Utente(u, p, ac, base64Image,tipo);
 
 		}
 		return null;
