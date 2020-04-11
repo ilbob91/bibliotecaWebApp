@@ -36,7 +36,7 @@
 	<br>
 	<br>
 	<br>
-	 <% String path = request.getContextPath(); %>
+	 
 	<form action="<%=path %>/admin/gestioneBiblioteca" method="post">
 		<input type="submit" class="btn btn-outline-primary btn-block"
 			style="width: 300px; height: 60px; margin: auto" name="azione"

@@ -22,12 +22,19 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="http://localhost:8080/bibliotecaWebApp/">Home </a>
+       <% String path = request.getContextPath(); %>
+     <form action="indietro" method="post" class="form-inline my-2 my-lg-0">
+      <button class="btn btn-outline-link my-2 my-sm-0" type="submit" value="Home">Opzioni</button>
+      </form>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="http://localhost:8080/bibliotecaWebApp/about.jsp">About</a>
       </li>
     </ul>
+    <form action="<%=path%>/cliente/opzioniCliente" method="post"class="form-inline my-2 my-lg-0">
+      
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"name="action" value="Logout">LogOut</button>
+    </form>
   </div>
 </nav>
 </body>

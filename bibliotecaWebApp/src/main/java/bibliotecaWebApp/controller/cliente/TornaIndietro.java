@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "tornaIndietro", urlPatterns = { "/cliente/tornaIndietro" })
+@WebServlet(name = "tornaIndietro", urlPatterns = { "/cliente/tornaIndietro" , "/tornaindietro"})
 public class TornaIndietro extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

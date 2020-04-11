@@ -34,18 +34,16 @@ public class Login extends HttpServlet {
 			
 			Utente ut = gest.getUtente(user, pass);
 
-			
+			 if (!gest.controlloUtente(user, pass)) {
+					req.setAttribute("messaggio", "mail o password errata. Riprova oppure REGISTRATI");
+					req.getRequestDispatcher("login.jsp").forward(req, resp);
 
-		        if (ut.getTipo().equalsIgnoreCase("admin")) {
+			}else if (ut.getTipo().equalsIgnoreCase("admin")) {
 		        	session.setAttribute("username", ut.getUsername());
 		        	session.setAttribute("tipo", ut.getTipo());
 					req.getRequestDispatcher("opzioniBiblioteca.jsp").forward(req, resp);
 
-				} else if (!gest.controlloUtente(user, pass)) {
-					req.setAttribute("messaggio", "mail o password errata. Riprova oppure REGISTRATI");
-					req.getRequestDispatcher("login.jsp").forward(req, resp);
-
-				} else {
+				}  else {
 					if (!ut.isActive()) {
 						req.setAttribute("messaggio", scriviRispostaUtenteNonAttivo(ut));
 						gest.close();

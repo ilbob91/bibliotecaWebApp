@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-@WebServlet(name = "indietro", urlPatterns = { "/admin/indietro" })
+@WebServlet(name = "indietro", urlPatterns = { "/admin/indietro", "/indietro" })
 public class TornaIndietroAdmin extends HttpServlet{
 @Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
