@@ -14,7 +14,7 @@ import bibliotecaWebApp.repository.GestioneDb;
 
 
 
-@WebServlet (name = "affitto", urlPatterns = { "/affitto" })			
+@WebServlet (name = "affitto", urlPatterns = { "/cliente/affitto" })			
 public class Affitto extends HttpServlet{
 
 	@Override

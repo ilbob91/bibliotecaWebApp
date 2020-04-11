@@ -33,7 +33,7 @@ public class FiltroCliente implements Filter {
 		HttpSession session = (HttpSession) req.getSession();
 		
 
-		boolean loggedIn = session != null && session.getAttribute("utente") != null;
+		boolean loggedIn = session != null && session.getAttribute("username") != null;
 		boolean loginRequest = req.getRequestURI().equals(loginURI);
 
 		if (loggedIn || loginRequest) {

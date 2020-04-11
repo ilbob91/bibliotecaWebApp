@@ -67,7 +67,7 @@
 			<div class="col">
 				<h2>
 					Cosa vuoi comprare,
-					<%=session.getAttribute("username")%>
+					<%=nome%>
 					?
 				</h2>
 				<form action="acquisto" method="post">

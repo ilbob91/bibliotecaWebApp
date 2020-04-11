@@ -15,9 +15,7 @@
 <body>
 	<%@include file="navbarCliente.jsp"%>
 	<br>
-	<%
-		String nome = (String) session.getAttribute("username");
-	%>
+
 	<h2>
 		<p class="text-xl-center">
 			Fai una scelta,
@@ -37,8 +35,9 @@
 	<%
 		}
 	%><br>
-<% String path = request.getContextPath(); %>
-	<form action="<%=path%>/cliente/opzioniCliente" method="post">
+
+	<form action="<%=path%>/cliente/opzioniCliente"
+		method="post">
 		<input type="submit" class="btn btn-outline-primary btn-block"
 			style="width: 300px; height: 60px; margin: auto" name=action
 			value="Visualizza immagine"> <br> <input type="submit"
@@ -53,12 +52,12 @@
 			value="Stampa acquisti"> <br> <input type="submit"
 			class="btn btn-outline-primary btn-block"
 			style="width: 300px; height: 60px; margin: auto" name=action
-			value="Stampa prestiti"> 
-			<input type="submit" class="btn btn-outline-secondary btn-block"
-			style="width: 150px; height: 50px; margin: auto" name=action 
+			value="Stampa prestiti"> <br> <input type="submit"
+			class="btn btn-outline-secondary btn-block"
+			style="width: 150px; height: 50px; margin: auto" name=action
 			value="Logout">
 	</form>
 	<br>
-	
+
 </body>
 </html>

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import bibliotecaWebApp.repository.GestioneDb;
 
-@WebServlet(name = "opzioniCliente", urlPatterns = { "cliente/opzioniCliente, /opzioniCliente" })
+@WebServlet(name = "opzioniCliente", urlPatterns = { "/cliente/opzioniCliente, /opzioniCliente" })
 public class GestioneCliente extends HttpServlet {
 
 	@Override
@@ -26,11 +26,8 @@ public class GestioneCliente extends HttpServlet {
 			HttpSession session = req.getSession();
 			String username = (String) session.getAttribute("username");
 			db = new GestioneDb();
-			if (azione.equalsIgnoreCase("Compra libri")) {
-				//int idScontrino = db.creaScontrino(username);
+			 if (azione.equalsIgnoreCase("Compra libri")) {
 				req.setAttribute("listaLibri", db.stampaLibri());
-				//req.setAttribute("idScontrino", idScontrino);
-				//session.setAttribute("username", username);
 				db.close();
 				req.getRequestDispatcher("/acquisto.jsp").forward(req, resp);
 			} else if (azione.equalsIgnoreCase("Affitta libri")) {
