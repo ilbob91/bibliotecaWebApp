@@ -7,17 +7,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "tornaIndietro", urlPatterns = { "/tornaIndietro" })
+@WebServlet(name = "tornaIndietro", urlPatterns = { "/cliente/tornaIndietro" })
 public class TornaIndietro extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		
-		req.setAttribute("username", req.getParameter("username"));
-		req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
+		HttpSession session = req.getSession();
+		session.getAttribute("username");
+		
+		resp.sendRedirect(req.getContextPath() + "/paginaCliente.jsp");
 		
 	}
-	
 	
 }

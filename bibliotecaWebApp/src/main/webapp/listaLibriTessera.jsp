@@ -13,7 +13,7 @@
 </head>
 <body>
 <% List<Prestito> lista = (List<Prestito>)request.getAttribute("listaLibriTessera"); %>
-<%String nomeUtente = (String) request.getAttribute("username"); %>
+
 
 <table class="table table-striped">
   
@@ -23,6 +23,9 @@
    <th>Username </th>
    <th>Titolo</th>
    <th>Quantità </th>
+   <th>Data Affitto</th>
+     <th>Data Fine Affitto</th>
+     <th>Codice</th>
     
   </tr>
   <% for(Prestito l : lista) { %>
@@ -40,6 +43,24 @@
      <td>
     <%=l.getQuantita()%>
        </td> 
+                <td>
+    <%=l.getDataAffitto()%>
+       </td> 
+        <td>
+    <%=l.getDataDiFine()%>
+    </td>    
+       <td>
+    <%=l.getIdPrestito()%>
+    </td>  
+      <td>
+       
+        <form action="opzioniCliente" method="post">
+  <input type="submit" name="action" value="Restituisci"> 
+  <input type="hidden" id="titolo" name="titolo" value=<%=l.getTitolo()%>>
+  <input type="hidden" id="disp" name="disp" value=<%=l.getQuantita()%>>
+ <input type="hidden" id="prestito" name="prestito" value=<%=l.getIdPrestito()%>>
+	</form>  
+	</td> 
     
   </tr>
 <% } %> 
@@ -47,7 +68,7 @@
 </table><br><br>
 <form action="tornaIndietro" method="post">
   <input type="submit" class="btn btn-outline-secondary" value="Torna Indietro">
-  <input type="hidden" id="username" name="username" value=<%=nomeUtente%>>  
+    
   
 </form>
 

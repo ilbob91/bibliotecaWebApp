@@ -19,9 +19,7 @@
 	<%
 		List<Scontrino> listaScontrini = (List<Scontrino>) request.getAttribute("listaScontrini");
 	%>
-	<%
-		String nomeUtente = (String) request.getAttribute("username");
-	%>
+	
 	<table class="table table-striped">
 
 		<h2>Lista Scontrini</h2>
@@ -44,8 +42,8 @@
 			<td><%=s.getCostoTotale()%></td>
 			<td>
 				<form action="opzioniCliente" method="post">
-					<input type="submit" class="btn btn-outline-secondary" name="action" value="Dettagli"> <input
-						type="hidden" id="username" name="username" value=<%=nomeUtente%>>
+					<input type="submit" class="btn btn-outline-secondary" name="action" value="Dettagli"> 
+						
 					<input type="number" hidden="true" id="id" name="id"
 						value=<%=s.getIdScontrino()%>>
 				</form>
@@ -60,8 +58,7 @@
 	<br>
 	<form action="tornaIndietro" method="post">
 		<input type="submit" class="btn btn-outline-secondary"
-			value="Torna Indietro"> <input type="hidden" id="username"
-			name="username" value=<%=nomeUtente%>>
+			value="Torna Indietro"> 
 
 	</form>
 </body>

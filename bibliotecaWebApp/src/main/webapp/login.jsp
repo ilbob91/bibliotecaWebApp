@@ -13,7 +13,7 @@
 <title>Entra</title>
 </head>
 <body>
-
+<%session.getAttribute("username");%>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <span class="navbar-brand mb-0 h1"> <img src="download.png" width="30" height="30" class="d-inline-block align-top" alt="">
   Libreria Gruppo 3</span>

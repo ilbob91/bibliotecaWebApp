@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bibliotecaWebApp.model.Utente;
 import bibliotecaWebApp.repository.GestioneDb;
@@ -25,7 +26,7 @@ public class Login extends HttpServlet {
 		GestioneDb gest;
             String user = req.getParameter("username");
 			String pass = req.getParameter("password");
-			
+			HttpSession session = req.getSession();
 		
 			try {
 				gest = new GestioneDb();
@@ -48,7 +49,7 @@ public class Login extends HttpServlet {
 						gest.close();
 						req.getRequestDispatcher("login.jsp").forward(req, resp);
 					} else {
-						req.setAttribute("username", ut.getUsername());
+						session.setAttribute("username", ut.getUsername());
 						gest.close();
 						req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
 					}

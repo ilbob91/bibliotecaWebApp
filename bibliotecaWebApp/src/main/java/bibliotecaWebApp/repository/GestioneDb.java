@@ -341,7 +341,7 @@ public class GestioneDb {
 	}
 		public void inserimentoTabellaAffitto(String titolo, String username, int idTessera, int quantita) throws SQLException {
 			PreparedStatement state = connessione.prepareStatement("insert into prestito (titolo, username, idTessera, quantita, dataAffitto, dataDiFine) values (?, ?, ?, ?, ?, ?);");
-			java.util.Date data = new java.util.Date();
+			Date data = new Date();
 			DateFormat formato = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY);
 			state.setString(1, titolo);
 			state.setString(2, username);
@@ -392,7 +392,7 @@ public class GestioneDb {
 	public  List<Prestito> stampaLibriInPrestito(int idTessera)
 			throws SQLException {
 		PreparedStatement statement = connessione
-				.prepareStatement("select username, titolo, quantita, dataAffitto, dataDiFine from prestito where idTessera = ?;");
+				.prepareStatement("select idPrestito,username, titolo, quantita, dataAffitto, dataDiFine from prestito where idTessera = ?;");
 		statement.setInt(1, idTessera);
 
 		ResultSet risultatoQuery = statement.executeQuery();
@@ -404,8 +404,8 @@ public class GestioneDb {
 			int quantita = risultatoQuery.getInt("quantita");
 			String dataAffitto = risultatoQuery.getString("dataAffitto");
 			String dataDiFine = risultatoQuery.getString("dataDiFine");
-
-			Prestito l = new Prestito(titolo, username, idTessera, quantita, dataAffitto,dataDiFine);
+			int idPrestito = risultatoQuery.getInt("idPrestito");
+			Prestito l = new Prestito(titolo, username, idTessera, quantita, dataAffitto,dataDiFine,idPrestito);
 			elenco.add(l);
 
 		}
@@ -533,6 +533,27 @@ public class GestioneDb {
         }
        
     }
+
+	public void updateTabellaLibroDopoRestituzione(String titolo, int disponibilita) throws SQLException {
+		List<Libro> lista = stampaLibri();
+		for (int i = 0; i < lista.size(); i++) {
+			if (lista.get(i).getTitolo().equalsIgnoreCase(titolo)) {
+				int nuovaDisponibilita = lista.get(i).getDisponibilita() + disponibilita;
+
+				lista.get(i).setDisponibilita(nuovaDisponibilita);
+				updateTabellaLibroSuDisp(titolo, nuovaDisponibilita);
+			}
+
+		}
+		
+	}
+
+	public void rimuoviLibroInPrestito(int idPrestito) throws SQLException {
+		PreparedStatement state = connessione.prepareStatement("delete from prestito where idPrestito = ?;");
+		state.setInt(1, idPrestito);
+		state.execute();
+		
+	}
 	
 	
 }

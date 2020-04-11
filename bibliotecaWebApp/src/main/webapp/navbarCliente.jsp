@@ -12,7 +12,9 @@
 
 </head>
 <body>
-
+<%
+		String nome = (String) session.getAttribute("username");
+	%>
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
   <span class="navbar-brand mb-0 h1"><img src="download.png" width="30" height="30" class="d-inline-block align-top" alt="">
   Libreria Gruppo 3</span>
@@ -23,8 +25,8 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
      <li class="nav-item">
-     <form action="opzioniCliente" method="post" class="form-inline my-2 my-lg-0">
-      <input type="hidden" id="username" name="username" value=<%=request.getAttribute("username")%>>
+     <% String path = request.getContextPath(); %>
+     <form action="<%=path%>/cliente/opzioniCliente" method="post" class="form-inline my-2 my-lg-0">
       <button class="btn btn-outline-link my-2 my-sm-0" type="submit" name="action" value="Home">Opzioni</button>
     </form>
       </li>
@@ -32,9 +34,9 @@
         <a class="nav-link" href="http://localhost:8080/bibliotecaWebApp/about.jsp">About</a>
       </li>
     </ul>
-     <form action="home.jsp" class="form-inline my-2 my-lg-0">
+     <form action="<%=path%>/cliente/opzioniCliente"class="form-inline my-2 my-lg-0">
       
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">LogOut</button>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"name="action" value="Logout">LogOut</button>
     </form>
     
   </div>

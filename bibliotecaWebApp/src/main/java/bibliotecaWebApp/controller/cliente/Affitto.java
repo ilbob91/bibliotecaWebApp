@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bibliotecaWebApp.repository.GestioneDb;
 
@@ -18,7 +19,8 @@ public class Affitto extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String username = req.getParameter("username");
+		HttpSession session = req.getSession();
+		String username = (String) session.getAttribute("username");
 		String azione = req.getParameter("azione");
 		String titolo = req.getParameter("titolo");
 
@@ -39,18 +41,18 @@ public class Affitto extends HttpServlet{
 							db.updateDisponibilitaLibri(titolo, quantita);
 
 							req.setAttribute("idTessera", idNuovo);
-							req.setAttribute("username", username);
+							//req.setAttribute("username", username);
 							req.setAttribute("listaLibri", db.stampaLibri());
 							req.setAttribute("mess", "Libro aggiunto con successo");
 						} else {
 							// non ci sono sufficienti libri
 							req.setAttribute("idTessera", idNuovo);
-							req.setAttribute("username", username);
+							//req.setAttribute("username", username);
 							req.setAttribute("listaLibri", db.stampaLibri());
 							req.setAttribute("mess", "Quantità libri non disponibile");
 						}
 						db.close();
-						req.getRequestDispatcher("affitto.jsp").forward(req, resp);
+						req.getRequestDispatcher("/affitto.jsp").forward(req, resp);
 					} else {
 						// quando lo scontrino già esiste e aggiungi un prodotto
 						String idSc = req.getParameter("idTessera");
@@ -60,38 +62,38 @@ public class Affitto extends HttpServlet{
 							db.updateDisponibilitaLibri(titolo, quantita);
 
 							req.setAttribute("idTessera", idTessera);
-							req.setAttribute("username", username);
+							//req.setAttribute("username", username);
 							req.setAttribute("listaLibri", db.stampaLibri());
 							req.setAttribute("mess", "Libro aggiunto con successo");
 						} else {
 							// scontrino già esiste e non c'è quantità sufficiente
 							req.setAttribute("idTessera", idTessera);
-							req.setAttribute("username", username);
+							//req.setAttribute("username", username);
 							req.setAttribute("listaLibri", db.stampaLibri());
 							req.setAttribute("mess", "Quantità libri non disponibile");
 						}
 						db.close();
-						req.getRequestDispatcher("affitto.jsp").forward(req, resp);
+						req.getRequestDispatcher("/affitto.jsp").forward(req, resp);
 
 					}
 				} else {
 					// quando non esiste lo scontrino e premi aggiungi senza scrivere nulla
 					if (req.getParameter("idTessera") == null) {
-						req.setAttribute("username", username);
+						//req.setAttribute("username", username);
 						req.setAttribute("listaLibri", db.stampaLibri());
 						req.setAttribute("mess", "Non puoi aggiungere 0 prodotti!");
 						db.close();
-						req.getRequestDispatcher("affitto.jsp").forward(req, resp);
+						req.getRequestDispatcher("/affitto.jsp").forward(req, resp);
 					} else {
 						// lo scontrino esiste e premi aggiungi senza scrivere nulla
 						String idSc = req.getParameter("idTessera");
 						int idTessera = Integer.parseInt(idSc);
 						req.setAttribute("idTessera", idTessera);
-						req.setAttribute("username", username);
+						//req.setAttribute("username", username);
 						req.setAttribute("listaLibri", db.stampaLibri());
 						req.setAttribute("mess", "Non puoi aggiungere 0 prodotti!");
 						db.close();
-						req.getRequestDispatcher("affitto.jsp").forward(req, resp);
+						req.getRequestDispatcher("/affitto.jsp").forward(req, resp);
 
 					}
 				}
@@ -114,19 +116,19 @@ public class Affitto extends HttpServlet{
 							db.updateQuantitaLibri(titolo, quantita);
 
 							req.setAttribute("idTessera", idNuovo);
-							req.setAttribute("username", username);
+							//req.setAttribute("username", username);
 							req.setAttribute("listaLibri", db.stampaLibri());
 							req.setAttribute("mess", "Libro aggiunto con successo e pagamento effettuato");
 							db.close();
-							req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
+							req.getRequestDispatcher("/opzioniCliente.jsp").forward(req, resp);
 						} else {
 							// non ci sono sufficienti libri
 							req.setAttribute("idTessera", idNuovo);
-							req.setAttribute("username", username);
+							//req.setAttribute("username", username);
 							req.setAttribute("listaLibri", db.stampaLibri());
 							req.setAttribute("mess", "Quantità libri non disponibile");
 							db.close();
-							req.getRequestDispatcher("affitto.jsp").forward(req, resp);
+							req.getRequestDispatcher("/affitto.jsp").forward(req, resp);
 						}
 
 					} else {
@@ -139,40 +141,40 @@ public class Affitto extends HttpServlet{
 							db.updateDisponibilitaLibri(titolo, quantita);
 
 							req.setAttribute("idTessera", idTessera);
-							req.setAttribute("username", username);
+							//req.setAttribute("username", username);
 							req.setAttribute("listaLibri", db.stampaLibri());
 							req.setAttribute("mess", "Libro aggiunto con successo");
 							db.close();
-							req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
+							req.getRequestDispatcher("/opzioniCliente.jsp").forward(req, resp);
 						} else {
 							// scontrino già esiste e non c'è sufficiente quantità
 							req.setAttribute("idTessera", idTessera);
-							req.setAttribute("username", username);
+							//req.setAttribute("username", username);
 							req.setAttribute("listaLibri", db.stampaLibri());
 							req.setAttribute("mess", "Quantità libri non disponibile");
 							db.close();
-							req.getRequestDispatcher("affitto.jsp").forward(req, resp);
+							req.getRequestDispatcher("/affitto.jsp").forward(req, resp);
 						}
 					}
 				} else {
 					// quando non esiste lo scontrino e premi paga senza scrivere nulla
 					if (req.getParameter("idTessera") == null) {
-						req.setAttribute("username", username);
+						//req.setAttribute("username", username);
 						req.setAttribute("listaLibri", db.stampaLibri());
 						req.setAttribute("mess", "Non puoi prenotare 0 prodotti!");
 						db.close();
-						req.getRequestDispatcher("affitto.jsp").forward(req, resp);
+						req.getRequestDispatcher("/affitto.jsp").forward(req, resp);
 					} else {
 						// quando non scrivi nulla, lo scontrino già esiste ma Paghi lo stesso tutto
 						// quello che c'è nel carrello
 						String idSc = req.getParameter("idTessera");
 						int idTessera = Integer.parseInt(idSc);
 						req.setAttribute("idTessera", idTessera);
-						req.setAttribute("username", username);
+						//req.setAttribute("username", username);
 						req.setAttribute("listaLibri", db.stampaLibri());
 						req.setAttribute("mess", "Pagamento effettuato con successo");
 						db.close();
-						req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
+						req.getRequestDispatcher("/opzioniCliente.jsp").forward(req, resp);
 					}
 				}
 
@@ -187,17 +189,18 @@ public class Affitto extends HttpServlet{
 			try {
 
 				if (req.getParameter("idTessera") == null) {
-					req.setAttribute("username", username);
-					req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
+					//req.setAttribute("username", username);
+					req.getRequestDispatcher("/opzioniCliente.jsp").forward(req, resp);
 				} else {
 					String idSc = req.getParameter("idTessera");
 					int idTessera = Integer.parseInt(idSc);
 					req.setAttribute("idTessera", idTessera);
-					req.setAttribute("username", username);
+					//req.setAttribute("username", username);
 					db = new GestioneDb();
 					db.cancellaTesseraVuoto(idTessera, username);
 					db.cancellaPrestitoVuoto(idTessera, username);
 					db.close();
+					req.getRequestDispatcher("/opzioniCliente.jsp").forward(req, resp);
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -206,7 +209,7 @@ public class Affitto extends HttpServlet{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			req.getRequestDispatcher("opzioniCliente.jsp").forward(req, resp);
+			
 		}
 	}
 	}

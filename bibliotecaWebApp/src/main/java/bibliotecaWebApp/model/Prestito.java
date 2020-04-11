@@ -8,8 +8,23 @@ public class Prestito {
 	private int quantita;
 	private String dataAffitto;
 	private String dataDiFine;
+	private int idPrestito;
 	
 	
+	
+	
+	public Prestito(String titolo, String username, int idTessera, int quantita, String dataAffitto, String dataDiFine,
+			int idPrestito) {
+		super();
+		this.titolo = titolo;
+		this.username = username;
+		this.idTessera = idTessera;
+		this.quantita = quantita;
+		this.dataAffitto = dataAffitto;
+		this.dataDiFine = dataDiFine;
+		this.idPrestito = idPrestito;
+	}
+
 	public Prestito(String titolo, String username, int idTessera, int quantita, String dataAffitto, String dataDiFine) {
 		this.titolo = titolo;
 		this.username = username;
@@ -19,6 +34,15 @@ public class Prestito {
 		this.dataDiFine = dataDiFine;
 	}
 	
+	
+	public int getIdPrestito() {
+		return idPrestito;
+	}
+
+	public void setIdPrestito(int idPrestito) {
+		this.idPrestito = idPrestito;
+	}
+
 	public String getDataDiFine() {
 		return dataDiFine;
 	}
